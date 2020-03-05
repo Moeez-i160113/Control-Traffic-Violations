@@ -10,7 +10,6 @@ import Main from './Main'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 import Payment from './Payment'
-import './constants'
 import Challans from './Challans'
 import HomePage from './HomePage'
 import Sidebar from './Sidebar';
@@ -33,6 +32,7 @@ import Spinner from './Spinner';
 
 import PageShell from './PageShell'
 import {BrowserRouter as Router, Switch, Route, Link, NavLink} from 'react-router-dom';
+import { render } from 'react-dom';
 
 // import { HashRouter as Router} from 'react-router-dom';
 
@@ -62,6 +62,7 @@ class App extends Component {
     Lat_long : [],
     vehicle:'',
     payment:'',
+    redirect : false,
     authenticated : false,
     loading: true
   }
@@ -203,7 +204,7 @@ async loadBlockchainData() {
     //const chalanCount = await ch.methods.chalanCount().call()
     //console.log(chalanCount)
     //if (this.state.Lat_long){window.alert(this.state.Lat_long[0][0])}
-    this.setState({ loading: false})
+    this.setState({ loading: true})
     //window.alert(disp)
   }
   
@@ -261,12 +262,15 @@ async Login(_num,_id,_password) {
     if(ab=='T'){
       window.alert(this.state.authenticated)
       this.setState({ authenticated:true })
+      this.setState({ redirect:true })
+     
       window.alert(this.state.authenticated)
+      // this.setState({ state: this.state });       // Components re - render kai liye
+      //this.forceUpdate();
+     // this.render(<LoginHomePage />)
       this.setState({ loading: false })
-      
-
     }
-  
+
 
 }
 
@@ -360,11 +364,17 @@ createOfficer( _name,  _CNIC,  _designation, _username,  _password) {
 }
 
   render() {
+    const isLoggedIn = this.state.authenticated;
+    if (this.state.redirect && this.state.authenticated) {
+      this.state.redirect = false
+      window.alert(this.state.redirect)
+      return <Redirect to={<LoginHomePage />} />
+    }
    //const disp = this.state.challan.methods.getChallan1(0).call()
+   //window.alert(isLoggedIn)
     return (
       <div>
-            
-              { this.state.loading
+           { this.state.loading
                 ? <div className="center"><Spinner /></div>
                 : <Router>
                     <div>
@@ -375,7 +385,6 @@ createOfficer( _name,  _CNIC,  _designation, _username,  _password) {
                      <Route path="/main" component={PageShell(Main)}/>
                      <Route path="/challans" component={PageShell(Challans)}/>
                      <Route path="/signup" component={PageShell(SignUp)}></Route>
-
 
                      <Route path="/signin" 
                      render={(routeProps) => (<SignIn {...routeProps} Login={this.Login} />)}
@@ -393,18 +402,18 @@ createOfficer( _name,  _CNIC,  _designation, _username,  _password) {
                      />
 
                     <Route path="/afterlogintable" 
-                     render={(routeProps) => (this.state.authenticated ?<AfterLoginTable {...routeProps} chalans={this.state.chalans} chalanCount = {this.state.chalanCount}/> : <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ?<AfterLoginTable {...routeProps} chalans={this.state.chalans} chalanCount = {this.state.chalanCount}/> : <Redirect to='/signin' />)}
                      />
 
                      <Route path="/officertable" 
                      render={(routeProps) => (<OfficerTable {...routeProps} officers={this.state.officers} officerCount = {this.state.officerCount}/>)}
                      />
                     <Route path="/afterloginofficertable" 
-                     render={(routeProps) => (this.state.authenticated ?<AfterLoginOfficerTable {...routeProps} officers={this.state.officers} officerCount = {this.state.officerCount}/>: <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ?<AfterLoginOfficerTable {...routeProps} officers={this.state.officers} officerCount = {this.state.officerCount}/>: <Redirect to='/signin' />)}
                      />
 
                     <Route path="/afterloginusertable" 
-                     render={(routeProps) => (this.state.authenticated ?<AfterLoginUserTable {...routeProps} users={this.state.users} userCount = {this.state.userCount}/>: <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ?<AfterLoginUserTable {...routeProps} users={this.state.users} userCount = {this.state.userCount}/>: <Redirect to='/signin' />)}
                      />
 
                     <Route path="/usertable" 
@@ -413,31 +422,33 @@ createOfficer( _name,  _CNIC,  _designation, _username,  _password) {
 
 
                      <Route path="/loginaddchallan" 
-                     render={(routeProps) => (this.state.authenticated ?<LoginAddChallan {...routeProps} add_Chalan={this.add_Chalan}/>: <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ?<LoginAddChallan {...routeProps} add_Chalan={this.add_Chalan}/>: <Redirect to='/signin' />)}
                      />
 
                     <Route path="/loginadduser" 
-                     render={(routeProps) => (this.state.authenticated ? <LoginAddUser {...routeProps} createUser={this.createUser}/>: <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ? <LoginAddUser {...routeProps} createUser={this.createUser}/>: <Redirect to='/signin' />)}
                      />
 
                     <Route path="/loginaddofficer" 
-                     render={(routeProps) => (this.state.authenticated ? <LoginAddOfficer {...routeProps} createOfficer={this.createOfficer}/>: <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ? <LoginAddOfficer {...routeProps} createOfficer={this.createOfficer}/>: <Redirect to='/signin' />)}
                      />
 
                      <Route path="/loginhomepage" 
-                     render={(routeProps) => (this.state.authenticated ? <LoginHomePage {...routeProps}/> : <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ? <LoginHomePage {...routeProps}/> : <Redirect to='/signin' />)}
                      />
+                    { }
+
 
                      <Route path="/loginaddchallan" 
-                     render={(routeProps) => (this.state.authenticated ? <LoginAddChallan {...routeProps} /> : <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ? <LoginAddChallan {...routeProps} /> : <Redirect to='/signin' />)}
                      />
 
                      <Route path="/loginadduser" 
-                     render={(routeProps) => (this.state.authenticated ? <LoginAddUser {...routeProps} /> : <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ? <LoginAddUser {...routeProps} /> : <Redirect to='/signin' />)}
                      />
 
                       <Route path="/afterloginhomepage" 
-                     render={(routeProps) => (this.state.authenticated ? <AfterLoginHomePage {...routeProps} Lat_long={this.state.Lat_long} /> : <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ? <AfterLoginHomePage {...routeProps} Lat_long={this.state.Lat_long} /> : <Redirect to='/signin' />)}
                      />                      
 
                    </Switch>

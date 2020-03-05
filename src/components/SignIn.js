@@ -68,8 +68,12 @@ class SignIn extends React.Component {
 
           const my_passwordd=this.my_password.value
           if(abc.length>1){  
-          this.props.Login(parseFloat(abc[1]), my_emaill, my_passwordd)}
+          const res = this.props.Login(parseFloat(abc[1]), my_emaill, my_passwordd)
+            
+
+          }
           else{window.alert("Wrong Format")}
+         // window.alert('signin page ret ')
         };
   return (
     <div>
@@ -112,7 +116,7 @@ class SignIn extends React.Component {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Link href="/loginhomepage" variant="body2"><Button
+          <Link to="/loginhomepage" variant="body2"><Button
               
             type="submit"
             fullWidth
