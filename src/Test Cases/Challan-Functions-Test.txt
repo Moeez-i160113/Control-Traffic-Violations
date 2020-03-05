@@ -1,0 +1,26 @@
+ function add_Chalan(  c_no,  _vnp,  _d,  _vt,  _fa,  _dn,  _dc,  _oc,  _wi,  _dd,  _cd,  _aa) public returns  ( ){
+
+1: function add_Chalan(  1,  AKZ - 217, 03-11-19 10:23 AM,  2,  500,  MAQSOOD,  61101-1195666-9,  61101-1195666-9,  512,  18-11-19,  CNIC,  RWP TPO) public returns  ( ){
+2: function add_Chalan(  2,  AEY - 564, 04-11-19 11:24 PM,  3,  300,  MUSTAFA,  51101-2297525-7,  51101-2297525-7,  513,  19-11-19,  CNIC,  RWP TPO) public returns  ( ){
+3: function add_Chalan(  3,  ABC - 256 , 04-11-19 5: 00 PM,  1,  600,  IBRAHEEM,  51101-3567429-8,  51101-3567429-8,  551,  19-11-19,  CNIC,  ISB TPO) public returns  ( ){
+4: function add_Chalan(  4,  AFT - 943, 05-11-19 6 : 45 PM,  4,  650,  ZAEEM,  61011-2567021-4,  61011-2567021-4,  599,  20-11-19,  CNIC,  ISB TPO) public returns  ( ){
+
+
+
+
+  function add_Cordinates(  _lan,  _lad,  _lon,  _lod,  _f)public returns ( ){
+1:  function add_Cordinates(  32,  35,  77,  105,  CIVICAKZ - 217.jpg)public returns ( ){
+2:  function add_Cordinates(  33,  45,  78,  106,  MEHRANAEY - 564.jpg)public returns ( ){
+3:  function add_Cordinates(  34,  52,  79,  99,  CAMRYABC - 256.jpg)public returns ( ){
+4:  function add_Cordinates(  35,  19,  71,  59,  COROLLAAFT - 943.jpg)public returns ( ){
+
+
+
+
+
+
+  function add_paid_information(  _cn,  _is) 
+1:  function add_paid_information(  1,  500) 
+2:  function add_paid_information(  2,  300) 
+3:  function add_paid_information(  3,  600) 
+4:  function add_paid_information(  4,  650) 
