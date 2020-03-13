@@ -62,6 +62,7 @@ function Map(props) {
         >
           <div>
             <h2>Offender Name: {selectedLocation[4]}</h2>
+            <p>i: {selectedLocation[5]}</p>
             <p>Vehicle Number: {selectedLocation[1]}</p>
             <p>Violation Type: {selectedLocation[2]}</p> 
             <p>Fine Amount: {selectedLocation[3]}</p>            

@@ -80,11 +80,12 @@ const StickyHeadTable = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            { props.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user, key) => {
+            { props.users.map((user, key) => {
               return(
                 <TableRow hover role="checkbox" tabIndex={-1} key={key}>
                     {columns.map((column, key1) => {
                     const value = user[key1].toString();
+                    window.alert(value)
                     return (
                       <TableCell key={key1} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}

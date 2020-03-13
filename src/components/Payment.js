@@ -53,24 +53,42 @@ function Copyright() {
   );
 }
 
-class SignIn extends React.Component {
+class Payment extends React.Component {
     render() {
-       const { classes } = this.props;
+    //  // const {challanselected} = this.props.location.state;
+    //  // window.alert(this.props.Addpaymentinformation)
+    //   //window.alert(challanselected)
+    //    const { classes } = this.props;
+    //     const handleSubmit = event => {
+    //         event.preventDefault();
+    //         window.alert("handler")
+    //         // alert(this.text);
+    //         console.log("event ", event);
+
+    //         // console.log("E ",this.email)
+    //         // console.log("p ",this.text)
+ 
+
+    //     };
+        const { classes } = this.props;
         const handleSubmit = event => {
             event.preventDefault();
-            // alert(this.text);
-            console.log("event ", event);
+            const datesubmitted = this.date_submitted.value
+            //window.alert("handler")
+           const {challanselected} = this.props.location.state;
+           var res = String(challanselected) ;
 
-            // console.log("E ",this.email)
-            // console.log("p ",this.text)
-          const my_emaill=this.my_email.value
-          const abc=my_emaill.split(".");  
+            //window.alert(typeof(res))
+            //window.alert(res)            
 
-          const my_passwordd=this.my_password.value
-
-          this.props.Login(parseFloat(abc[1]), abc[0], my_passwordd)
+            //  const challan = this.challan_no.value
+             const transactionid = this.transaction_id.value
+             const bankname = this.bank_name.value
+             this.props.Addpaymentinformation(res,datesubmitted,transactionid,bankname)
+         // window.alert('signin page ret ')
         };
   return (
+    <form className={classes.container} validate="true" onSubmit={handleSubmit} autoComplete="off">
     <div>
 
     <Container component="main" maxWidth="xs">
@@ -83,11 +101,19 @@ class SignIn extends React.Component {
         Payment Information
       </Typography>
       <Grid container spacing={3}>
-      <Grid item xs={12} md={6}>
-          <TextField required id="challan_no" label="Challan Number" fullWidth />
-        </Grid>
         <Grid item xs={12} md={6}>
-          <TextField required id="transaction_id" label="Transaction ID" fullWidth />
+          <TextField 
+                          id="transaction_id"
+                          label="Transaction ID"
+                          required
+                          fullWidth
+                          type="text"
+                          className={classes.textField}
+                          inputRef={el => this.transaction_id = el}
+                          margin="normal"
+                          variant="outlined"
+          
+          />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
@@ -95,32 +121,55 @@ class SignIn extends React.Component {
             id="bank_name"
             label="Bank Name"
             fullWidth
+            required
+            fullWidth
+            type="text"
+            className={classes.textField}
+            inputRef={el => this.bank_name = el}
+            margin="normal"
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField required id="date_submitted" label="Date of Submission" fullWidth />
+          <TextField 
+          required id="date_submitted" 
+          label="Date of Submission" 
+          fullWidth
+          required
+          fullWidth
+          type="text"
+          className={classes.textField}
+          inputRef={el => this.date_submitted = el}
+          margin="normal"
+          variant="outlined"
+          
+          />
         </Grid>
       </Grid>
-          <Link href="/loginhomepage" variant="body2"><Button
+      <Grid container direction="row"justify="center"alignItems="baseline">
+          <Grid item md={1}>
+          <Button
               
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Add Payment
-          </Button>
-          </Link>
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Pay
+            </Button>
+                </Grid>
+            </Grid>
       </div>
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
     </div>
+    </form>
   );
  }
 }
 
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(Payment);

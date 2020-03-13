@@ -63,7 +63,6 @@ export default function Navbar() {
           </Typography>
             <Link to = '/table'><Button className={classes.button} color="primary" variant="contained">Challans</Button></Link>
             <Link to = '/officertable'><Button className={classes.button} color="primary" variant="contained">Officers</Button></Link>
-            <Link to = '/usertable'><Button className={classes.button} color="primary" variant="contained">Users</Button></Link>
             <Link to = '/signin'><Button className={classes.button} color="primary" variant="contained">Sign in</Button></Link>
 
         </Toolbar>

@@ -1,0 +1,37 @@
+function add_challan_to_user( _id, _challanNo) public
+1: function add_challan_to_user( 1, 1) public
+2: function add_challan_to_user( 2, 2) public
+3: function add_challan_to_user( 3, 3) public
+4: function add_challan_to_user( 4, 4) public
+
+
+
+
+
+
+function add_vehicle_to_user( _id, _vehicleNo) public
+1: function add_vehicle_to_user( 1, _vehicleNo) public
+2: function add_vehicle_to_user( 2, _vehicleNo) public
+3: function add_vehicle_to_user( 3, _vehicleNo) public
+4: function add_vehicle_to_user( 4, _vehicleNo) public
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ function createUser(  a1,  a2) public returns()

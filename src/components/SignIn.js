@@ -67,13 +67,8 @@ class SignIn extends React.Component {
           const abc=my_emaill.split(".");  
 
           const my_passwordd=this.my_password.value
-          if(abc.length>1){  
-          const res = this.props.Login(parseFloat(abc[1]), my_emaill, my_passwordd)
-            
 
-          }
-          else{window.alert("Wrong Format")}
-         // window.alert('signin page ret ')
+          this.props.Login(parseFloat(abc[1]), abc[0], my_passwordd)
         };
   return (
     <div>
@@ -94,7 +89,7 @@ class SignIn extends React.Component {
             required
             fullWidth
             id="my_email"
-            label="User ID"
+            label="Email Address"
             inputRef={el => this.my_email = el}
             name="my_email"
             autoComplete="email"
@@ -116,8 +111,7 @@ class SignIn extends React.Component {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Link to="/loginhomepage" variant="body2"><Button
-              
+          <Link href="/loginhomepage" variant="body2"><Button
             type="submit"
             fullWidth
             variant="contained"

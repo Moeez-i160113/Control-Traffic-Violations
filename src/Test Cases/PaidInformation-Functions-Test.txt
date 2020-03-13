@@ -1,0 +1,15 @@
+function editInformation( index,  a1,  a2,  a3) 
+1:function editInformation( 1,  04-11-19 12:25 PM,  1,  HBL F7 ISLAMABAD) 
+2:function editInformation( 2,  05-11-19 10:20 AM,  2,  HBL SADDAR RAWALPINDI) 
+3:function editInformation( 3,  06-11-19 12:55 PM,  3,  AKBL CHAKLALA SCHEME 3 RAWALPINDI) 
+4:function editInformation( 4,  07-11-19 3:24 PM,  4,  HBL FOREIGN OFFICE ISLAMABAD) 
+
+
+
+
+
+ function getInformation( index) public view returns( , , )
+1: function getInformation( 1) public view returns( , , )
+2: function getInformation( 2) public view returns( , , )
+3: function getInformation( 3) public view returns( , , )
+4: function getInformation( 4) public view returns( , , )

@@ -14,22 +14,23 @@ const useStyles = makeStyles({
   },
 });
 
-export default function WeeklyDeposits() {
+const WeeklyDeposits = props => {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Weekly Deposits</Title>
-      <Typography component="p" variant="h6">
-        Rs 3,024.00
-      </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        on 1 March, 2020
-      </Typography>
-      <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View balance
-        </Link>
-      </div>
+      <Title>Monthly Deposits</Title>
+      {
+                props.monthly_amount.map((key) => {
+                  return (
+                    <div>
+                    <Typography component="textSecondary" variant="h6">
+                    Rs : {key}
+                  </Typography>
+                    </div>
+                    );
+                })
+        }
     </React.Fragment>
   );
 }
+export default WeeklyDeposits;

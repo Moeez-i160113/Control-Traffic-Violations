@@ -14,22 +14,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MonthlyDeposits() {
+const MonthlyDeposits = props =>  {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Monthly Deposits</Title>
+      <Title>Annual Deposits</Title>
       <Typography component="p" variant="h6">
-        Rs 3,024.00
+        Rs : {props.annual_amount}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         on 1 March, 2020
       </Typography>
-      <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View balance
-        </Link>
-      </div>
     </React.Fragment>
   );
 }
+export default MonthlyDeposits;

@@ -76,14 +76,6 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Functions</ListSubheader>
-    <Link href="/loginaddchallan" variant="body2">
-    <ListItem button>
-      <ListItemIcon>
-        <AddChallan />
-      </ListItemIcon>
-      <ListItemText primary="Add Challan" />
-    </ListItem>
-    </Link>
 
     <Link href="/logindailychallans" variant="body2">
     <ListItem button>

@@ -1,0 +1,14 @@
+function addInformation(  a1,  a2,  a3, a4,  a5,  a6,  a7, oi) public returns  ()
+1: function addInformation(  AKZ - 217,  HONDA ,  BLACK, 2M,  VXZ-476954,  AKFHJAIU56,  CIVIC, 1) public returns  ()
+2: function addInformation(  AEY - 564,  SUZUKI ,  WHITE, 1M,  VXZ-595128,  AKFHJASJIOA46,  MEHRAN, 2) public returns  ()
+3: function addInformation(  ABC - 256,  TOYOTA ,  SILVER, 4M,  VXZ-546516,  DJODJOJDOFI54,  CAMRY, 3) public returns  ()
+4: function addInformation(  AFT - 943,  TOYOTA ,  GREY, 2.5M,  VXZ-145646,  NDKUDIIDHID46,  COROLLA, 4) public returns  ()
+
+
+
+
+function setOwner( index, oi) public
+1: function setOwner( 1, 1) public
+2: function setOwner( 2, 2) public
+3: function setOwner( 3, 3) public
+4: function setOwner( 4, 4) public

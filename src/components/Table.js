@@ -21,12 +21,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+
+import {Link} from 'react-router-dom';
 import Navbar from './Navbar'
 
 import Popup from "reactjs-popup";
-import Content from "./content";
+import Details from "./Details";
 import "./styles.css";
 import Payment from './Payment'
+import LoginHomePage from './LoginHomePage';
+import LoginDailyChallans from './LoginDailyChallans';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -60,13 +64,6 @@ const columns = [
     { id: 'vehicle_number_plate', label: 'Vehicle Number Plate', minWidth: 40 },
     { id: 'date', label: 'Date', minWidth: 40 },
     {
-      id: 'time',
-      label: 'Time',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toLocaleString(),
-    },
-    {
       id: 'violation_type',
       label: 'Violation Type',
       minWidth: 40,
@@ -74,77 +71,45 @@ const columns = [
       format: value => value.toLocaleString(),
     },
     {
-      id: 'fine_amount',
-      label: 'Fine Amount',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toFixed(2),
-    },
-    { id: 'driver_name', label: 'Driver Name', minWidth: 40 },
-    {
       id: 'driver_cnic',
       label: 'Driver CNIC',
-      minWidth: 40,
-      align: 'right',
+      minWidth: 70,
       format: value => value.toLocaleString(),
-    },
-    {
-      id: 'owner_cnic',
-      label: 'Owner CNIC',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toLocaleString(),
-    },
-    {
-      id: 'warden_id',
-      label: 'Warden ID',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toFixed(2),
-    },
-      { id: 'due_date', label: 'Due Date', minWidth: 40 },
-    { id: 'paid_information', label: 'Paid Information', minWidth: 40 },
-    {
-      id: 'confiscated_document',
-      label: 'Confiscated Document',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toLocaleString(),
-    },
-    {
-      id: 'available_at',
-      label: 'Available At',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toLocaleString(),
-    },
-    {
-      id: 'latitude_number_part',
-      label: 'latitude_number_part',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toFixed(2),
     },
       {
       id: 'latitude_decimal_part',
-      label: 'latitude_decimal_part',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toLocaleString(),
+      label: '',
+      minWidth: 1,
     },
     {
       id: 'longitude_number_part',
-      label: 'longitude_number_part',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toFixed(2),
+      label: '',
+      minWidth: 1,
     },
       {
       id: 'longitude_decimal_part',
-      label: 'longitude_decimal_part',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toFixed(2),
+      label: '',
+      minWidth: 1,
+    },
+    {
+      id: 'longitude_decimal_part',
+      label: '',
+      minWidth: 1,
+    },
+    {
+      id: 'longitude_decimal_part',
+      label: '',
+      minWidth: 1,
+    },
+    {
+      id: 'longitude_decimal_part',
+      label: '',
+      minWidth: 1,
+    },
+    {
+      id: 'longitude_decimal_part',
+      label: '',
+      minWidth: 1,
     },
       
     
@@ -230,7 +195,10 @@ const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
   const { selected } = props;
-
+  const { chalans } = props; 
+  const { isPaid } = props;
+  //window.alert('inside')
+  //window.alert(isPaid);
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -250,7 +218,9 @@ const EnhancedTableToolbar = props => {
       {numSelected == 1 ?  (
         <Tooltip title="Print">
 
-              <Button  color="secondary" variant="contained" onClick={() => window.alert('fuck')}>Details</Button>
+      <Popup modal trigger={<Button  color="secondary" variant="contained" >Details</Button>}>
+        {close => <Details close={close} selected={selected} chalans ={props.chalans} />}
+      </Popup>
           
 
         </Tooltip>
@@ -276,7 +246,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 750,
+    minWidth: 7500,
   },
   visuallyHidden: {
     border: 0,
@@ -296,6 +266,7 @@ const EnhancedTable = props => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
+  var [isPaid] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -347,7 +318,7 @@ const EnhancedTable = props => {
   };
 
   const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 50));
     setPage(0);
   };
 
@@ -356,14 +327,16 @@ const EnhancedTable = props => {
   };
 
   const isSelected = name => selected.indexOf(name) !== -1;
-  window.alert(selected)
+  //window.alert(selected)
+  let payment = false;
+  const { Addpaymentinformation } = props;
 
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
       <Navbar />
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} />
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} chalans ={props.chalans} isPaid={isPaid}  />
         <TableContainer>
           <Table
             className={classes.table}
@@ -383,8 +356,7 @@ const EnhancedTable = props => {
             <TableBody>
 
               {
-                props.chalans.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((chalan, key) => {
+                props.chalans.map((chalan, key) => {
                   const isItemSelected = isSelected(key);
                   const labelId = `enhanced-table-checkbox-${key}`;
                   
@@ -404,12 +376,44 @@ const EnhancedTable = props => {
                       />
                   {columns.map((column, key1) => {
                     const value = chalan[key1].toString();
+                    
+                    if (key != 0 && key == selected && key1 == 10){
+                      if (value == '0'){
+                        //payment = value
+                        payment = true
+                        //props.challanselected = selected
+                        //window.alert(payment)
+                        //window.alert(selected)
+                        return(
+                          <div>
+                        {payment ?  <Link to={{ pathname: '/payment', state: { challanselected: selected} }}><Button className={classes.button} color="primary" variant="contained">Pay</Button></Link>
+                             : 
+                            <Typography className = "text-center" component="h3" variant="h3">
+                                P
+                            </Typography>
+         }
+                            
+                            
+                             
+                              </div>
+                          );
+                      }
+
+                     // return (<div isPaid = {selected}></div>);
+                    }
+                    
+      
+                    if (key1 === 1 || key1 === 0 || key1 === 2 || key1 === 4 || key1 === 7){
+                      
                       return(
-                      <TableCell padding="checkbox" key={key1} align={column.align}>
+                      <TableCell padding="checkbox" key={key1} align={column.align} >
+                        
                         {column.format && typeof value === 'number' ? column.format(value) : value}
+            
 
                       </TableCell>
                       );
+                    }
                     })}
                     </TableRow>
 
@@ -418,21 +422,13 @@ const EnhancedTable = props => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={props.chalanCount}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
     </div>
+    
   );
 }
 

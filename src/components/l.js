@@ -4,14 +4,7 @@ import logo from '../logo.jpg';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
-import DailyChallans from './Dailychallans';
-import DailyDeposits from './DailyDeposits';
-import WeeklyDeposits from './WeeklyDeposits';
-import MonthlyDeposits from './MonthlyDeposits';
-
-import WeeklyChallans from './WeeklyChallans';
-import MonthlyChallans from './MonthlyChallans';
-
+import Main from './Main'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -55,6 +48,102 @@ function Copyright() {
 
 const drawerWidth = 240;
 
+
+const columns = [
+  { id: 'challan_number_in_day', disablePadding: true, label: '#', minWidth: 40 },
+  { id: 'vehicle_number_plate', label: 'Vehicle Number Plate', minWidth: 40 },
+  { id: 'date', label: 'Date', minWidth: 40 },
+  {
+    id: 'time',
+    label: 'Time',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toLocaleString(),
+  },
+  {
+    id: 'violation_type',
+    label: 'Violation Type',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toLocaleString(),
+  },
+  {
+    id: 'fine_amount',
+    label: 'Fine Amount',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toFixed(2),
+  },
+  { id: 'driver_name', label: 'Driver Name', minWidth: 40 },
+  {
+    id: 'driver_cnic',
+    label: 'Driver CNIC',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toLocaleString(),
+  },
+  {
+    id: 'owner_cnic',
+    label: 'Owner CNIC',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toLocaleString(),
+  },
+  {
+    id: 'warden_id',
+    label: 'Warden ID',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toFixed(2),
+  },
+    { id: 'due_date', label: 'Due Date', minWidth: 40 },
+  { id: 'paid_information', label: 'Paid Information', minWidth: 40 },
+  {
+    id: 'confiscated_document',
+    label: 'Confiscated Document',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toLocaleString(),
+  },
+  {
+    id: 'available_at',
+    label: 'Available At',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toLocaleString(),
+  },
+  {
+    id: 'latitude_number_part',
+    label: 'latitude_number_part',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toFixed(2),
+  },
+    {
+    id: 'latitude_decimal_part',
+    label: 'latitude_decimal_part',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toLocaleString(),
+  },
+{
+    id: 'longitude_number_part',
+    label: 'longitude_number_part',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toFixed(2),
+  },
+    {
+    id: 'longitude_decimal_part',
+    label: 'longitude_decimal_part',
+    minWidth: 40,
+    align: 'right',
+    format: value => value.toFixed(2),
+  },
+    
+  
+
+];
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -131,19 +220,12 @@ const useStyles = makeStyles(theme => ({
     marginLeft: '10px',
     marginRight: '10px',
   },
-
-  paper2: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
   fixedHeight: {
     height: 240,
   },
 }));
 
-const LoginDailyChallans = props => {
+const Details = props => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -165,103 +247,95 @@ const LoginDailyChallans = props => {
     };
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const fixedHeightPaper2 = clsx(classes.paper2, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-          <MenuIcon />
-          </IconButton>
-          <Link to = '/afterloginhomepage'>
-            <a className="navbar-brand" href="#">
-              <img src={logo} alt="logo" style={{ width: '50px' }} />
-            </a>
-          </Link>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Challans
-          </Typography>
-          <Avatar aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
-             A
-            </Avatar>
-            <Menu
-              id="fade-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={open1}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <Link to = '/'><MenuItem onClick={handleClose}>Logout</MenuItem></Link>
-            </Menu>
-      </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
-      </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-           
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper2}>
-              <DailyDeposits daily_amount = {props.daily_amount}/>
-              {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
-              </Paper>
+        {
+     props.chalans.map((chalan, key) => {
+      return (
+     <div key={key} 
+      {columns.map((column, key1) => {
+      const value = chalan[key1].toString();
+      
+      if (key === props.selected){
+        
+        return(
+	  <div key={key1} > 		
+          <Container maxWidth="lg" className={classes.container}>
 
-            </Grid>
+          {/* Recent Orders */}
+        <Paper className={classes.paper}>
+        <Grid container spacing={4}>
+         <Grid item xs={6}>
+           <Typography variant="h6" gutterBottom>
+                    Name
+          </Typography>
+        <Typography variant="overline" display="block" gutterBottom>
+          Moeez
+        </Typography>
             
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper2}>
-              <WeeklyDeposits monthly_amount = {props.monthly_amount} />
-              {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
-              </Paper>
-            </Grid>
+         </Grid>
+        <Grid item xs={6}>
+        <Typography variant="h6" gutterBottom>
+            CNIC
+  
+          </Typography>
+        <Typography variant="overline" display="block" gutterBottom>
+          61101-2239666-5
+        </Typography>
+            
+         </Grid>
+                   <Grid item xs={6}>
+        <Typography variant="h6" gutterBottom>
+            Address
+    
+  
+          </Typography>
+        <Typography variant="overline" display="block" gutterBottom>
+          Bahria Town
+        </Typography>
+            
+         </Grid>
+                   <Grid item xs={6}>
+        <Typography variant="h6" gutterBottom>
+           
+              Designation
+  
+          </Typography>
+        <Typography variant="overline" display="block" gutterBottom>
+          Constable
+        </Typography>
+            
+         </Grid>
+        </Grid>
+        </Paper>
+        <Box pt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+  
+   
 
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper2}>
-              <MonthlyDeposits annual_amount ={props.annual_amount}/>
-              <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button>
-              </Paper>
-            </Grid>
+
+        );
+      }
+      })}
+
+      )
+  })}
 
 
-
-
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
       </main>
     </div>
   );
 }
 
 
-export default LoginDailyChallans;
+export default Details;
+
+
+
+
+

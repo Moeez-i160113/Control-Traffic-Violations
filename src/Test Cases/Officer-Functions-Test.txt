@@ -1,0 +1,42 @@
+ function Login ( _id,   _username,   _password) public returns( )
+1:function Login ( 1,   moeez,   moeez) public returns( )
+2:function Login ( 2,   mustafa,   mustafa) public returns( )
+3:function Login ( 3,   zaeem,   zaeem) public returns( )
+4:function Login ( 4,   ibraheem,   ibraheem) public returns( )
+
+
+
+
+
+ function add_challan_to_warden( _id, _challanNo)
+1: function add_challan_to_warden( 1, 1)
+2: function add_challan_to_warden( 2, 2)
+3:  function add_challan_to_warden( 3, 3)
+4:  function add_challan_to_warden( 4, 4)
+
+
+
+
+
+
+
+function createOfficer(  _name,   _CNIC,   _designation,  _username,   _password) public returns()
+1:function createOfficer(  moeez,   61101-1195666-9,   CONSTABLE,  moeez,   moeez) public returns()
+2:function createOfficer(  mustafa,   51101-2297525-7,   ASI,  mustafa,   mustafa) public returns()
+3: function createOfficer(  zaeem,   51101-3567429-8,   CONSTABLE,  zaeem,   zaeem) public returns()
+4: function createOfficer(  ibraheem,   61011-2567021-4,   ASI,  ibraheem,   ibraheem) public returns()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

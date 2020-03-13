@@ -12,6 +12,7 @@ import SignUp from './SignUp'
 import Payment from './Payment'
 import Challans from './Challans'
 import HomePage from './HomePage'
+import Details from './Details'
 import Sidebar from './Sidebar';
 import OfficerTable from './OfficerTable';
 import UserTable from './UserTable';
@@ -63,13 +64,22 @@ class App extends Component {
     vehicle:'',
     payment:'',
     redirect : false,
-    authenticated : false,
+    authenticated : true,
+    challanselected : 0,
+    daily_array :[],
+    daily_count :[],
+    daily_amount : [],
+    monthly_array : [],
+    monthly_count : [],
+    monthly_amount : [],
+    annual_amount: 0,
     loading: true
   }
   this.add_Chalan = this.add_Chalan.bind(this)
   this.Login = this.Login.bind(this)
   this.createUser = this.createUser.bind(this)
   this.createOfficer = this.createOfficer.bind(this)
+  this.Addpaymentinformation = this.Addpaymentinformation.bind(this)
 }
 
 
@@ -115,6 +125,12 @@ async loadBlockchainData() {
     this.setState({ chalanCount: challanCount })
     this.setState({ officerCount: OfficerCount })
     var challan_array=[]
+    var daily_array=[]
+    var daily_count=[]
+    var daily_amount=[]
+    var monthly_array=[]
+    var monthly_count=[]
+    var monthly_amount=[]
 
 
     if (ch && officerr && userr){
@@ -129,6 +145,7 @@ async loadBlockchainData() {
 
       var split=ch3.split(",")
       var split_latlong=split[0].split(":")
+      //window.alert(split_latlong)
 
       //window.alert(split_latlong[0])
       const lat_long=[]
@@ -138,11 +155,15 @@ async loadBlockchainData() {
       lat_long.push(a)
       lat_long.push(b)
 
+      // if (i > 30 && i < 40){window.alert(a + ' : ' + b)}
+
       coordinates.push(lat_long)
+      // if (i > 30){window.alert(coordinates) }
       var temp_array=[]
 
       for(var a=0;a<7;a++){
         temp_array.push(ch1[a])
+        //window.alert(a + ' : ' + ch1[a])
         if (a==1 || a==3 || a==4 || a==5){
           marker.push(ch1[a])
         }
@@ -165,7 +186,9 @@ async loadBlockchainData() {
        coordinates.push(marker[a]) 
        //window.alert(coordinates)
       }
+      coordinates.push(i)
       this.state.Lat_long.push(coordinates)
+      // if (i > 30){window.alert(this.state.Lat_long[i])}
 
       marker = []
       //window.alert(this.state.Lat_long[i][0][2])
@@ -177,6 +200,7 @@ async loadBlockchainData() {
 
       //window.alert(this.state.Marker_Lat_long[i][0])
     }
+    
 
     for (var i = 0; i < OfficerCount; i++) {
       const of1 = await officerr.methods.getInformation(i).call()
@@ -184,14 +208,115 @@ async loadBlockchainData() {
       //window.alert(of1[1]) 
     }
 
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < userCount; i++) {
     const us1 = await userr.methods.getUserInformation(i).call()
+    //window.alert('before: ' + us1)
+    us1 = us1.toString().split(',')
+    //window.alert('After: ' + us1)
     this.state.users.push(us1)
     //window.alert(us1)
-    this.state.users[i] = this.state.users[i].toString().split(',')
+    //this.state.users[i] = this.state.users[i].toString().split(',')
     //window.alert(this.state.users[i])
     }
 
+
+    
+    //window.alert(challan_array)
+    for (var i = 0; i < challanCount; i++) {
+      daily_array.push(this.state.chalans[i])
+      monthly_array.push(this.state.chalans[i])
+    }
+
+    var count = 0;
+    var amount = 0 
+
+    for (var i=0; i<daily_array.length; i++) {
+      var listI = daily_array[i];
+      //window.alert("listI[2]"+listI[2])
+      loopJ: for (var j=0; j<daily_array.length; j++) {
+          var listJ = daily_array[j];
+          //window.alert("listJ[2]: "+listJ[2])
+          if (listI[2] == listJ[2]) {
+            count = count + 1
+            var a = parseInt(listJ[4]);
+            amount = amount + a
+          
+          }; //Ignore itself
+          //window.alert("count: "+ count)
+          
+          if (listJ[2] != listI[2]) continue loopJ;
+          
+          // At this point, their values are equal.
+          daily_array.splice(j, 1);
+      }
+      daily_count.push(count)
+      daily_amount.push(amount)
+      count = 0
+      amount = 0
+    }
+
+    count = 0
+    amount = 0
+
+
+    for (var i=0; i<monthly_array.length; i++) {
+      var listI = monthly_array[i];
+      //window.alert("listI[2]"+listI[2])
+      loopJ: for (var j=0; j<monthly_array.length; j++) {
+          var listJ = monthly_array[j];
+          //window.alert("listJ[2]: "+listJ[2])
+          var split1=listI[2].split("/")
+          split1=listI[2].split("/")
+          var split2=listJ[2].split("/")
+          split2=listJ[2].split("/")
+          //window.alert(split1[1] + split2[1])
+          
+          if (split1[1] == split2[1]) {
+            count = count + 1
+            var a = parseInt(listJ[4]);
+            amount = amount + a
+          }; //Ignore itself
+          //window.alert("count: "+ count)
+          
+          if (split1[1] != split2[1]) continue loopJ;
+          
+          // At this point, their values are equal.
+          monthly_array.splice(j, 1);
+
+      }
+      monthly_count.push(count)
+      monthly_amount.push(amount)
+      count = 0
+      amount = 0
+    }
+
+
+
+    var annual_amount = 0
+
+    for (var i=0; i<daily_array.length; i++) {
+      this.state.daily_array.push(daily_array[i])
+    }
+    for (var i=0; i<monthly_array.length; i++) {
+      this.state.monthly_array.push(monthly_array[i])
+    }
+    for (var i=0; i<daily_count.length; i++) {
+      this.state.daily_count.push(daily_count[i])
+    }
+    for (var i=0; i<daily_amount.length; i++) {
+      this.state.daily_amount.push(daily_amount[i])
+    }
+    for (var i=0; i<monthly_amount.length; i++) {
+      //window.alert("Monthly amount: "+ monthly_amount[i])
+      this.state.monthly_amount.push(monthly_amount[i])
+      annual_amount = annual_amount +  monthly_amount[i]
+    }
+    for (var i=0; i<monthly_count.length; i++) {
+      //window.alert("Monthly amount: "+ monthly_amount[i])
+      this.state.monthly_count.push(monthly_count[i])
+      //window.alert(monthly_count[i])
+    }
+    this.setState({ annual_amount: annual_amount })
 
 
     // const disp = await ch.methods.getChallan1(0).call()
@@ -204,7 +329,7 @@ async loadBlockchainData() {
     //const chalanCount = await ch.methods.chalanCount().call()
     //console.log(chalanCount)
     //if (this.state.Lat_long){window.alert(this.state.Lat_long[0][0])}
-    this.setState({ loading: true})
+    this.setState({ loading: false})
     //window.alert(disp)
   }
   
@@ -216,8 +341,8 @@ add_Chalan(c_no, _vnp, _d, _vt, _fa, _dn, _dc, _oc, _wi, _dd, _cd, _aa) {
 
     var Tx = require('ethereumjs-tx').Transaction;
     const web3 = new Web3('https://ropsten.infura.io/v3/6a049e3fdb75458b93dce3d601d0c13c')
-    const account1 = '0x418B465759Df1B517Fe12a632F3C623a7DB5652A' // Your account address 1
-    const privateKey1 = Buffer.from('4F8B0C7082F2427806D6774CD6350643DB3566CB7E2DF1964756AAF7CA967338', 'hex')
+    const account1 = '0x6Ae7E011502f1f380fe13dBde20eDD2d5116239e'
+    const privateKey1=  Buffer.from('0e523854388177938c9a047f413458dd8fdad77d2ea04e346a6827412e165b36', 'hex')
     web3.eth.getTransactionCount(account1,'pending', (err, txCount) => {
 
     const txObject = {
@@ -312,39 +437,120 @@ createUser(a1, a2, a3, a4, a5, a6)  {
 
 }
 
+
+async Addpaymentinformation(challan,datesubmitted,transactionid,bankname){
+  this.setState({ loading: true })
+  const account1 = '0x6Ae7E011502f1f380fe13dBde20eDD2d5116239e'
+  const privateKey1=  Buffer.from('0e523854388177938c9a047f413458dd8fdad77d2ea04e346a6827412e165b36', 'hex')
+  var Tx = require('ethereumjs-tx').Transaction;
+  const web3 = new Web3('https://ropsten.infura.io/v3/6a049e3fdb75458b93dce3d601d0c13c')
+
+  // if (this.state.payment.methods.addInformation){window.alert("fffffffffffffffffffff")}
+  //window.alert(this.state.account1)
+  var count=0
+  //window.alert(this.state.payment.methods.getCount())
+  count =await this.state.payment.methods.getCount().call({from:account1});
+  // window.alert("Count: " + count)
+    //window.alert("res"+res)
+    web3.eth.getTransactionCount(account1,(err, txCount) => {
+
+    const txObject = {
+      nonce:    web3.utils.toHex(txCount),
+      gasLimit: web3.utils.toHex(400000), // Raise the gas limit to a much higher amount
+      gasPrice: web3.utils.toHex(web3.utils.toWei('10', 'gwei')),
+      to:   '0x929880aC59628bc4b23007f369E12773644d0F36',
+      data: this.state.payment.methods.addInformation(datesubmitted,challan,transactionid,bankname).encodeABI()
+    }
+
+    var tx = new Tx(txObject, {'chain':'ropsten'});
+    // window.alert(tx)
+
+
+    tx.sign(privateKey1)
+
+    const serializedTx = tx.serialize()
+    const raw = '0x' + serializedTx.toString('hex')
+
+    web3.eth.sendSignedTransaction(raw, (err, txHash) => {
+
+  
+  
+    
+    console.log('err:', err, 'txHash:', txHash)
+    // Use this txHash to find the contract on Etherscan!
+   
+    // window.alert(txHash)
+
+  })
+})
+  web3.eth.getTransactionCount(account1,(err, txCount) => {
+
+    const txObject = {
+      nonce:    web3.utils.toHex(txCount),
+      gasLimit: web3.utils.toHex(400000), // Raise the gas limit to a much higher amount
+      gasPrice: web3.utils.toHex(web3.utils.toWei('10', 'gwei')),
+      to: '0xD08a4959973B3CA1726fFE5A064c993bb9D6949A'  ,
+      data: this.state.challan.methods.add_paid_information(challan,count).encodeABI()
+    }
+  
+  // const tx = new Tx(txObject)
+    var tx = new Tx(txObject, {'chain':'ropsten'});
+  
+  
+    tx.sign(privateKey1)
+  
+    const serializedTx = tx.serialize()
+    const raw = '0x' + serializedTx.toString('hex')
+  
+    web3.eth.sendSignedTransaction(raw, (err, txHash) => {
+      
+        window.alert(txHash)
+      console.log('err:', err, 'txHash:', txHash)
+      // Use this txHash to find the contract on Etherscan!
+      window.alert(txHash)
+    })
+  
+})
+
+
+  this.setState({ loading: false })
+  // window.alert("done")
+
+}
+
 createOfficer( _name,  _CNIC,  _designation, _username,  _password) {
-    // this.setState({ loading: true })
-    // var Tx = require('ethereumjs-tx').Transaction;
-    // const web3 = new Web3('https://ropsten.infura.io/v3/6a049e3fdb75458b93dce3d601d0c13c')
-    // const account1 = '0x418B465759Df1B517Fe12a632F3C623a7DB5652A' // Your account address 1
-    // const privateKey1 = Buffer.from('4F8B0C7082F2427806D6774CD6350643DB3566CB7E2DF1964756AAF7CA967338', 'hex')
-    // web3.eth.getTransactionCount(account1, (err, txCount) => {
+    this.setState({ loading: true })
+    var Tx = require('ethereumjs-tx').Transaction;
+    const web3 = new Web3('https://ropsten.infura.io/v3/6a049e3fdb75458b93dce3d601d0c13c')
+    const account1 = '0x6Ae7E011502f1f380fe13dBde20eDD2d5116239e'
+    const privateKey1=  Buffer.from('0e523854388177938c9a047f413458dd8fdad77d2ea04e346a6827412e165b36', 'hex')
+    web3.eth.getTransactionCount(account1, (err, txCount) => {
 
-    // const txObject = {
-    //   nonce:    web3.utils.toHex(txCount),
-    //   gasLimit: web3.utils.toHex(400000), // Raise the gas limit to a much higher amount
-    //   gasPrice: web3.utils.toHex(web3.utils.toWei('10', 'gwei')),
-    //   to: '0x50B4f4C306cFb2c83DF4457899Fa12cd638A16e8',
-    //   data: this.state.officer.methods.createOfficer( _name,  _CNIC,  _designation, _username,  _password).encodeABI()
-   // }
+    const txObject = {
+      nonce:    web3.utils.toHex(txCount),
+      gasLimit: web3.utils.toHex(400000), // Raise the gas limit to a much higher amount
+      gasPrice: web3.utils.toHex(web3.utils.toWei('10', 'gwei')),
+      to: '0x50B4f4C306cFb2c83DF4457899Fa12cd638A16e8',
+      data: this.state.officer.methods.createOfficer( _name,  _CNIC,  _designation, _username,  _password).encodeABI()
+   }
 
-   // const tx = new Tx(txObject)
-    // var tx = new Tx(txObject, {'chain':'ropsten'});
+  //   const tx = new Tx(txObject)
+    var tx = new Tx(txObject, {'chain':'ropsten'});
 
 
-    // tx.sign(privateKey1)
+    tx.sign(privateKey1)
 
-    // const serializedTx = tx.serialize()
-    // const raw = '0x' + serializedTx.toString('hex')
+    const serializedTx = tx.serialize()
+    const raw = '0x' + serializedTx.toString('hex')
 
-    // web3.eth.sendSignedTransaction(raw, (err, txHash) => {
-    //   console.log('err:', err, 'txHash:', txHash)
-    //   // Use this txHash to find the contract on Etherscan!
-    //   window.alert(txHash)
-    // })
-  //})
- //   this.setState({ loading: false })
-  //  window.alert("done")
+    web3.eth.sendSignedTransaction(raw, (err, txHash) => {
+      console.log('err:', err, 'txHash:', txHash)
+      // Use this txHash to find the contract on Etherscan!
+      window.alert(txHash)
+    })
+  })
+   this.setState({ loading: false })
+   window.alert("done")
 }
 
 
@@ -364,12 +570,13 @@ createOfficer( _name,  _CNIC,  _designation, _username,  _password) {
 }
 
   render() {
+
     const isLoggedIn = this.state.authenticated;
-    if (this.state.redirect && this.state.authenticated) {
-      this.state.redirect = false
-      window.alert(this.state.redirect)
-      return <Redirect to={<LoginHomePage />} />
-    }
+     if (this.state.redirect && this.state.authenticated) {
+       this.state.redirect = false
+       window.alert(this.state.redirect)
+       return <Redirect to='/loginhomepage' />
+     }
    //const disp = this.state.challan.methods.getChallan1(0).call()
    //window.alert(isLoggedIn)
     return (
@@ -385,24 +592,28 @@ createOfficer( _name,  _CNIC,  _designation, _username,  _password) {
                      <Route path="/main" component={PageShell(Main)}/>
                      <Route path="/challans" component={PageShell(Challans)}/>
                      <Route path="/signup" component={PageShell(SignUp)}></Route>
+                     
 
                      <Route path="/signin" 
                      render={(routeProps) => (<SignIn {...routeProps} Login={this.Login} />)}
                      />
                      <Route path="/payment" 
-                     render={(routeProps) => (<Payment {...routeProps} />)}
+                     render={(routeProps) => (<Payment {...routeProps}Addpaymentinformation = {this.Addpaymentinformation} />)}
+                     />
+                    <Route path="/details" 
+                     render={(routeProps) => (<Details {...routeProps}  chalans={this.state.chalans}/>)}
                      />
                      
                      <Route path="/table" 
-                     render={(routeProps) => (<Table {...routeProps} chalans={this.state.chalans} chalanCount = {this.state.chalanCount} />)}
+                     render={(routeProps) => (<Table {...routeProps} chalans={this.state.chalans} Addpaymentinformation = {this.Addpaymentinformation} chalanCount = {this.state.chalanCount} />)}
                      />
                     
                     <Route path="/logindailychallans" 
-                     render={(routeProps) => (<LoginDailyChallans {...routeProps} />)}
+                     render={(routeProps) => (<LoginDailyChallans daily_amount = {this.state.daily_amount} monthly_count = {this.state.monthly_count} annual_amount = {this.state.annual_amount} monthly_amount = {this.state.monthly_amount} monthly_array = {this.state.monthly_array} daily_count = {this.state.daily_count} daily_array = {this.state.daily_array} {...routeProps} />)}
                      />
 
                     <Route path="/afterlogintable" 
-                     render={(routeProps) => (isLoggedIn ?<AfterLoginTable {...routeProps} chalans={this.state.chalans} chalanCount = {this.state.chalanCount}/> : <Redirect to='/signin' />)}
+                     render={(routeProps) => (isLoggedIn ?<AfterLoginTable {...routeProps}  chalans={this.state.chalans} Addpaymentinformation = {this.Addpaymentinformation} chalanCount = {this.state.chalanCount}/> : <Redirect to='/signin' />)}
                      />
 
                      <Route path="/officertable" 

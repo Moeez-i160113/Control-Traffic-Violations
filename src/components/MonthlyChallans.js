@@ -3,7 +3,6 @@ import {
   ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend,
 } from 'recharts';
-import Title from './Title'
 
 const data = [
   {
@@ -26,17 +25,16 @@ const data = [
   },
 ];
 
-export default class MonthlyChallans extends PureComponent {
+export default class Example extends PureComponent {
   static jsfiddleUrl = 'https://jsfiddle.net/alidingling/94sebfL8/';
 
   render() {
+    const {monthly_count} = this.props;
     return (
-    <React.Fragment> 
-        <Title> Monthly Reports </Title>
       <ComposedChart
         width={500}
         height={400}
-        data={data}
+        data={this.props.monthly_count}
         margin={{
           top: 20, right: 20, bottom: 20, left: 20,
         }}
@@ -49,7 +47,6 @@ export default class MonthlyChallans extends PureComponent {
         <Bar dataKey="uv" barSize={20} fill="#413ea0" />
         <Line type="monotone" dataKey="uv" stroke="#ff7300" />
       </ComposedChart>
-      </React.Fragment> 
     );
   }
 }

@@ -78,7 +78,6 @@ export default function AfterLoginNavbar() {
           </Typography>
           <Link to = '/afterlogintable'><Button className={classes.button} color="primary" variant="contained" >Challans</Button></Link>
           <Link to = '/afterloginofficertable'><Button className={classes.button} color="primary" variant="contained">Officers</Button></Link>
-          <Link to = '/afterloginusertable'><Button className={classes.button} color="primary" variant="contained">Users</Button></Link>
           <Avatar aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
              A
           </Avatar>
