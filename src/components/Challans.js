@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Challans extends Component {
+class Challans extends React.PureComponent {
 
   render() {
     return (

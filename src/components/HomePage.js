@@ -5,11 +5,12 @@ import Web3 from 'web3'
 import './App.css';
 import Challan from '../abis/Challan.json'
 import Navbar from './Navbar'
-import AfterLoginNavbar from './AfterLoginNavbar'
 import Main from './Main'
 import SignIn from './SignIn'
 import Challans from './Challans'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import AfterLoginNavbar from './AfterLoginNavbar'
+import auth from './auth'
 
 import {withGoogleMap, withScriptjs, GoogleMap, Marker, InfoWindow} from "react-google-maps";
 import * as Data from "./pakistandistricts.json";
@@ -76,11 +77,15 @@ function Map(props) {
 
 const MapWrapped = withScriptjs(withGoogleMap(Map));
 
-class HomePage extends Component {
+class HomePage extends React.PureComponent {
   render() {
     return (
       <div className="row">
-           <Navbar />
+    {auth.isAuthenticated() ? (
+        <AfterLoginNavbar /> 
+      ) : (
+        <Navbar />
+      )}
                 <div style={{ width: "100vw", height: "100vh" }}>
                 <MapWrapped Lat_long={this.props.Lat_long}
                   googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${

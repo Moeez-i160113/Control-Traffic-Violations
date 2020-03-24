@@ -7,9 +7,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import AfterLoginNavbar from './AfterLoginNavbar';
 import Typography from '@material-ui/core/Typography';
 
+import Navbar from './Navbar'
 
 const columns = [
   { id: 'id', label: '#', minWidth: 40 },
@@ -68,7 +68,7 @@ const StickyHeadTable = props => {
 
   return (
     <Paper className={classes.root}>
-    <AfterLoginNavbar />
+    <Navbar />
       <div className={classes.tableWrapper}>
         <Typography class = "text-center" component="h1" variant="h1">
           Staff Information

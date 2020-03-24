@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 
 import logo from '../logo.jpg';
 import SignIn from './SignIn';
-import SignUp from './SignUp';
+import auth from "./auth";
 
-import DailyChallans from './Dailychallans';
-import DailyDeposits from './DailyDeposits';
-import WeeklyDeposits from './WeeklyDeposits';
-import MonthlyDeposits from './MonthlyDeposits';
+// import DailyChallans from './Dailychallans';
+// import DailyDeposits from './DailyDeposits';
+// import WeeklyDeposits from './WeeklyDeposits';
+// import MonthlyDeposits from './MonthlyDeposits';
 
-import WeeklyChallans from './WeeklyChallans';
-import MonthlyChallans from './MonthlyChallans';
+// import WeeklyAmount from './WeeklyAmount';
+// import MonthlyChallans from './MonthlyChallans';
+
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -38,6 +39,17 @@ import MenuList from '@material-ui/core/MenuList';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+
+
+
+const DailyChallans = React.lazy(() => import("./DailyChallans"));
+const DailyDeposits = React.lazy(() => import("./DailyDeposits"));
+const WeeklyDeposits = React.lazy(() => import("./WeeklyDeposits"));
+const MonthlyDeposits = React.lazy(() => import("./MonthlyDeposits"));
+const WeeklyAmount = React.lazy(() => import("./WeeklyAmount"));
+const MonthlyChallans = React.lazy(() => import("./MonthlyChallans"));
+const MonthlyAmount = React.lazy(() => import("./MonthlyAmount"));
+
 
 
 function Copyright() {
@@ -120,16 +132,27 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(0),
+    paddingBottom: theme.spacing(0),
   },
   paper: {
-    padding: theme.spacing(2),
+    marginTop: theme.spacing(8),
+    marginLeft: theme.spacing(8),
+    marginRight: theme.spacing(8),
     display: 'flex',
     flexDirection: 'row',
-    width: '100%',
-    marginLeft: '10px',
-    marginRight: '10px',
+    alignItems: 'center',
+    // backgroundImage: "url(" + " logo.jpg" + ")",
+    // backgroundPosition: 'center',
+    // backgroundSize: 'cover',
+    // backgroundRepeat: 'no-repeat'
+  },
+
+  background: {
+    backgroundImage: "url(" + " logo.jpg" + ")",
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
   },
 
   paper2: {
@@ -154,6 +177,10 @@ const LoginDailyChallans = props => {
   };
 
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleCloseLogout = () => {
+    auth.logout();
     setAnchorEl(null);
   };
 
@@ -181,7 +208,7 @@ const LoginDailyChallans = props => {
           >
           <MenuIcon />
           </IconButton>
-          <Link to = '/afterloginhomepage'>
+          <Link to = '/'>
             <a className="navbar-brand" href="#">
               <img src={logo} alt="logo" style={{ width: '50px' }} />
             </a>
@@ -200,7 +227,7 @@ const LoginDailyChallans = props => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <Link to = '/'><MenuItem onClick={handleClose}>Logout</MenuItem></Link>
+              <Link to = '/'><MenuItem onClick={handleCloseLogout}>Logout</MenuItem></Link>
             </Menu>
       </Toolbar>
       </AppBar>
@@ -224,36 +251,65 @@ const LoginDailyChallans = props => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
+        <Paper className={classes.background}> 
+          {/* <Grid container spacing={1}> */}
             {/* Chart */}
            
             {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper2}>
-              <DailyDeposits daily_amount = {props.daily_amount}/>
+            {/* <Grid item xs={12} md={4} lg={3}> */}
+              {/* <Paper className={fixedHeightPaper2}> */}
+              {/* <DailyDeposits daily_amount = {props.daily_amount}/> */}
               {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
-              </Paper>
+              {/* </Paper> */}
 
-            </Grid>
+            {/* </Grid> */}
             
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper2}>
-              <WeeklyDeposits monthly_amount = {props.monthly_amount} />
+            {/* <Grid item xs={12} md={4} lg={3}> */}
+              {/* <Paper className={fixedHeightPaper2}> */}
+              {/* <WeeklyDeposits monthly_amount = {props.monthly_amount} /> */}
+              {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
+              {/* </Paper> */}
+            {/* </Grid> */}
+
+            <Grid item >
+              <Paper className={classes.paper}> 
+              <DailyChallans daily_count ={props.daily_count}/>
               {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper2}>
+            <Grid item >
+            <Paper className={classes.paper}> 
+              <WeeklyAmount daily_count ={props.daily_count}/>
+              {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
+              </Paper>
+            </Grid>
+
+            <Grid item >
+            <Paper className={classes.paper}> 
+              <MonthlyChallans monthly_count ={props.monthly_count}/>
+              {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
+              </Paper>
+            </Grid>
+
+            <Grid item >
+            <Paper className={classes.paper}> 
+              <MonthlyAmount monthly_count ={props.monthly_count}/>
+              {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
+              </Paper>
+            </Grid>
+
+            <Grid item >
+              <Paper className={classes.paper}>
               <MonthlyDeposits annual_amount ={props.annual_amount}/>
-              <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button>
+              {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
               </Paper>
             </Grid>
 
 
 
-
-          </Grid>
+          {/* </Grid> */}
+          </Paper>
           <Box pt={4}>
             <Copyright />
           </Box>

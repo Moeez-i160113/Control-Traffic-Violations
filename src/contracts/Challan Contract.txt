@@ -1,0 +1,134 @@
+address:
+https://ropsten.etherscan.io/tx/0xa9d5e47f52a8a020900c6fd53374aabad3e78611a3eaae200805e3b5b8ce3f06
+0xD08a4959973B3CA1726fFE5A064c993bb9D6949A
+
+
+abi:
+[{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":false,"inputs":[{"internalType":"string","name":"_vnp","type":"string"},{"internalType":"string","name":"_d","type":"string"},{"internalType":"uint256","name":"_vt","type":"uint256"},{"internalType":"uint256","name":"_fa","type":"uint256"},{"internalType":"string","name":"_dn","type":"string"},{"internalType":"string","name":"_dc","type":"string"},{"internalType":"string","name":"_oc","type":"string"},{"internalType":"uint256","name":"_wi","type":"uint256"},{"internalType":"string","name":"_dd","type":"string"},{"internalType":"string","name":"_cd","type":"string"},{"internalType":"uint256","name":"_aa","type":"uint256"},{"internalType":"string","name":"coordinates_filename","type":"string"}],"name":"add_Chalan","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_cn","type":"uint256"},{"internalType":"uint256","name":"_is","type":"uint256"}],"name":"add_paid_information","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"chalanCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"string","name":"a","type":"string"},{"internalType":"string","name":"b","type":"string"}],"name":"compareStrings","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"getChallan1","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"getChallan2","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"getChallan3","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_cn","type":"uint256"}],"name":"get_paid_information","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"setNull","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"},{"internalType":"string","name":"cnic","type":"string"},{"internalType":"string","name":"name","type":"string"}],"name":"set_Drivers","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"},{"internalType":"string","name":"dateD","type":"string"}],"name":"set_DueDate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"},{"internalType":"string","name":"file","type":"string"}],"name":"set_filename","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
+contract:
+pragma solidity ^0.5.0;
+contract Challan {
+    uint public chalanCount = 0;
+    mapping(uint => Chalan) all_challans;
+    
+    constructor () public {
+    }
+
+    struct Chalan {
+      string vehicle_number_plate;
+      string date_time;
+      
+      uint violation_type;
+      uint fine_amount;
+      
+      string driver_name;
+      string driver_cnic;
+      string owner_cnic;
+      uint warden_id;
+      
+      string due_date;
+      uint paid_information;
+      string confiscated_document;
+      uint available_at;
+      string filename;
+    }
+    function set_DueDate(uint _id,string memory dateD) public {
+        if(all_challans[_id].paid_information!=0){
+            all_challans[_id].due_date=dateD;
+        }
+    
+    }
+    function set_Drivers(uint _id,string memory cnic,string memory name) public {
+        all_challans[_id].owner_cnic=cnic;
+        all_challans[_id].driver_cnic=cnic;
+        all_challans[_id].driver_name=name;
+        
+    }
+    function setNull(uint id)public {
+        if(chalanCount>0 && id<chalanCount){
+            if(id==chalanCount-1){
+                chalanCount=chalanCount-1;
+                all_challans[id]=Chalan("","",0,0,"","","",0,"",0,"",0,"");
+                return;
+            }
+            all_challans[id] = all_challans[chalanCount-1];
+            chalanCount=chalanCount-1;
+            
+        }
+    }
+    
+    function add_Chalan(string memory _vnp,string memory _d,uint _vt,uint _fa,string memory _dn,string memory _dc,string memory _oc,uint _wi,string memory _dd,string memory _cd,uint _aa,string memory coordinates_filename) public returns  (uint){
+        uint _pi=0;
+        all_challans[chalanCount] = Chalan(_vnp,_d,_vt,_fa,_dn,_dc,_oc,_wi,_dd,_pi,_cd,_aa,coordinates_filename);
+        chalanCount++;
+        return chalanCount;
+    }
+    function set_filename(uint _id,string memory file) public {
+        all_challans[_id].filename=file;
+    }
+    function getChallan1(uint index) public view returns(uint,string memory,string memory,uint,uint,string memory,string memory) {
+        return (index,all_challans[index].vehicle_number_plate,all_challans[index].date_time,all_challans[index].violation_type,all_challans[index].fine_amount,all_challans[index].driver_name,all_challans[index].driver_cnic);
+    }
+    function getChallan2(uint index) public view returns(string memory,uint,string memory,uint,string memory,uint) {
+        return (all_challans[index].owner_cnic,all_challans[index].warden_id,all_challans[index].due_date,all_challans[index].paid_information,all_challans[index].confiscated_document,all_challans[index].available_at);
+    }
+    function getChallan3(uint index) public view returns(string memory) {
+        return (all_challans[index].filename);
+    }
+    function add_paid_information(uint _cn,uint _is) public {
+        require(_cn<=chalanCount);
+        require(_cn>0);
+        all_challans[_cn].paid_information=_is;
+    }
+    function get_paid_information(uint _cn) public returns (uint){
+        return all_challans[_cn].paid_information;
+    }
+    function compareStrings (string memory a, string memory b) public view 
+       returns (bool) {
+    return (keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked((b))) );
+
+     }
+    
+    enum violation_types { TL, OS, NH, NNP, BW, NSB }
+    // TL = Traffic Light
+    // OS = OverSpeeding
+    // NH = No Helmet 
+    // NNP = No Number Plate
+    // BW = Black Windows
+    // NSB = No Seat Belt
+    
+    function strConcat(string memory _a, string memory _b) internal returns (string memory){
+        bytes memory _ba = bytes(_a);
+        bytes memory _bb = bytes(_b);
+        bytes memory _bcomma = bytes(":");
+        string memory abcd = new string(_ba.length + _bb.length+1);
+        bytes memory babcde = bytes(abcd);
+        uint k = 0;
+        for (uint i = 0; i < _ba.length; i++) babcde[k++] = _ba[i];
+        babcde[_ba.length]=_bcomma[0];
+        for (uint i = 0; i < _bb.length; i++) babcde[k++] = _bb[i];
+        
+        return string(babcde);
+    }
+    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint j = _i;
+        uint len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint k = len - 1;
+        while (_i != 0) {
+            bstr[k--] = byte(uint8(48 + _i % 10));
+            _i /= 10;
+        }
+        return string(bstr);
+    }
+    
+  
+}
+

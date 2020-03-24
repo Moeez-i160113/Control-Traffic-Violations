@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import logo from '../logo.jpg';
 import SignIn from './SignIn';
-import SignUp from './SignUp';
+
+import auth from "./auth";
 
 import Main from './Main'
 import clsx from 'clsx';
@@ -143,6 +144,10 @@ const LoginAddChallan = props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleCloseLogout = () => {
+    auth.logout();
+    setAnchorEl(null);
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open1 = Boolean(anchorEl);
@@ -167,7 +172,7 @@ const LoginAddChallan = props => {
           >
           <MenuIcon />
           </IconButton>
-          <Link to = '/afterloginhomepage'>
+          <Link to = '/'>
             <a className="navbar-brand" href="#">
               <img src={logo} alt="logo" style={{ width: '50px' }} />
             </a>
@@ -186,7 +191,7 @@ const LoginAddChallan = props => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <Link to = '/'><MenuItem onClick={handleClose}>Logout</MenuItem></Link>
+              <Link to = '/'><MenuItem onClick={handleCloseLogout}>Logout</MenuItem></Link>
             </Menu>
       </Toolbar>
       </AppBar>

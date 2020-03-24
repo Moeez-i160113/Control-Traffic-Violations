@@ -16,14 +16,12 @@ const useStyles = makeStyles({
 
 const MonthlyDeposits = props =>  {
   const classes = useStyles();
+  var date = new Date();
   return (
     <React.Fragment>
-      <Title>Annual Deposits</Title>
+      <Title>Annual Deposits --------------------------------- </Title>
       <Typography component="p" variant="h6">
-        Rs : {props.annual_amount}
-      </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        on 1 March, 2020
+         - On {date.toLocaleDateString()}    are  Rs : {props.annual_amount}           
       </Typography>
     </React.Fragment>
   );

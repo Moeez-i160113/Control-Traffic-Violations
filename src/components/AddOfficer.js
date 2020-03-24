@@ -67,7 +67,7 @@ const styles = {
 
 
 
-class AddOfficer extends React.Component {
+class AddOfficer extends React.PureComponent {
     render() {
        const { classes } = this.props;
         const handleSubmit = event => {
@@ -133,7 +133,7 @@ class AddOfficer extends React.Component {
             />
             <TextField 
                 id="username"
-                label="Default Usenmame"
+                label="Default Username"
                 required
                 fullWidth
                 type="text"
@@ -147,13 +147,12 @@ class AddOfficer extends React.Component {
                 label="Default Password"
                 required
                 fullWidth
-                type="text"
+                type="password"
                 className={classes.textField}
                 inputRef={el => this.password = el}
                 margin="normal"
                 variant="outlined"
-            />              
-           
+            />   
     </Grid>
     </div>
             <Grid container direction="row"justify="center"alignItems="baseline">

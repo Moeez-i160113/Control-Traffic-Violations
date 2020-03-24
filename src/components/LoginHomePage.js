@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import logo from '../logo.jpg';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
+import { withRouter } from 'react-router-dom';
+import auth from "./auth";
 
 import Main from './Main'
 import clsx from 'clsx';
@@ -129,7 +129,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function LoginHomePage() {
+
+const LoginHomePage = props => {
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -140,6 +142,11 @@ export default function LoginHomePage() {
   };
 
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleCloseLogout = () => {
+    auth.logout();
+    window.alert(auth.isAuthenticated())
     setAnchorEl(null);
   };
 
@@ -166,7 +173,7 @@ export default function LoginHomePage() {
           >
           <MenuIcon />
           </IconButton>
-          <Link to = '/afterloginhomepage'>
+          <Link to = '/'>
             <a className="navbar-brand" href="#">
               <img src={logo} alt="logo" style={{ width: '50px' }} />
             </a>
@@ -185,7 +192,7 @@ export default function LoginHomePage() {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <Link to = '/'><MenuItem onClick={handleClose}>Logout</MenuItem></Link>
+              <Link to = '/'><MenuItem onClick={handleCloseLogout}>Logout</MenuItem></Link>
             </Menu>
       </Toolbar>
       </AppBar>
@@ -262,5 +269,16 @@ export default function LoginHomePage() {
         </Container>
       </main>
     </div>
+  // , (prevProps, nextProps) => {
+  //   if (prevProps != nextProps){
+  //     window.alert("Rendering Props: " + props)
+  //     return false;
+  //   }
+  //   window.alert("YASSSSS!!!!!!!!!!!!! ")
+  //   return false;
+
+  // }
   );
 }
+
+export default LoginHomePage;

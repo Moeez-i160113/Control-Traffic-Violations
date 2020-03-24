@@ -18,6 +18,10 @@ const styles = theme => ({
   '@global': {
     body: {
       backgroundColor: theme.palette.common.white,
+      backgroundImage: "url(" + " logo.jpg" + ")",
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat'
     },
   },
   paper: {
@@ -25,6 +29,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    
   },
   avatar: {
     margin: theme.spacing(1),
@@ -56,6 +61,7 @@ function Copyright() {
 class Payment extends React.Component {
     render() {
     //  // const {challanselected} = this.props.location.state;
+    const {query} = this.props.location.state;
     //  // window.alert(this.props.Addpaymentinformation)
     //   //window.alert(challanselected)
     //    const { classes } = this.props;

@@ -56,19 +56,6 @@ export const mainListItems = (
       <ListItemText primary="Profile" />
     </ListItem></Link>
 
-    <Link href="/loginadduser" variant="body2"><ListItem button>
-      <ListItemIcon>
-         <AddUser />
-      </ListItemIcon>
-      <ListItemText primary="Add User" />
-    </ListItem></Link>
-
-    <Link href="/loginaddOfficer" variant="body2"><ListItem button>
-      <ListItemIcon>
-         <AddUser />
-      </ListItemIcon>
-      <ListItemText primary="Add Officer" />
-    </ListItem></Link>
 
       </div>
 );
@@ -83,6 +70,22 @@ export const secondaryListItems = (
         <AddChallan />
       </ListItemIcon>
       <ListItemText primary="Reports" />
+    </ListItem>
+    </Link>
+    
+    <Link href="/loginadduser" variant="body2"><ListItem button>
+      <ListItemIcon>
+         <AddUser />
+      </ListItemIcon>
+      <ListItemText primary="Add User" />
+    </ListItem>
+    </Link>
+
+    <Link href="/loginaddOfficer" variant="body2"><ListItem button>
+      <ListItemIcon>
+         <AddUser />
+      </ListItemIcon>
+      <ListItemText primary="Add Officer" />
     </ListItem>
     </Link>
 

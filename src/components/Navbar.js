@@ -59,9 +59,10 @@ export default function Navbar() {
             </a>
           </Link>
           <Typography variant="h6" className={classes.title}>
-            Challans
+            Islamabad Traffic Police
           </Typography>
             <Link to = '/table'><Button className={classes.button} color="primary" variant="contained">Challans</Button></Link>
+            <Link to = '/vehicletable'><Button className={classes.button} color="primary" variant="contained">Vehicles</Button></Link>
             <Link to = '/officertable'><Button className={classes.button} color="primary" variant="contained">Officers</Button></Link>
             <Link to = '/signin'><Button className={classes.button} color="primary" variant="contained">Sign in</Button></Link>
 

@@ -22,11 +22,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import logo from './logo.jpg';
+
 import {Link} from 'react-router-dom';
 import Navbar from './Navbar'
 import AfterLoginNavbar from './AfterLoginNavbar'
-import auth from './auth'
+import auth from "./auth";
 
 
 import history from './history';
@@ -217,7 +217,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       ) : (
         <Typography className = "text-center" component="h3" variant="h3">
-          Violations Informatio
+          Search Result
         </Typography>
       )}
 
@@ -232,7 +232,7 @@ const EnhancedTableToolbar = props => {
         </Tooltip>
       ) : (
         <Typography className = "text-center" component="h3" variant="h3">
-          n
+          s
         </Typography>
       )}
     </Toolbar>
@@ -363,42 +363,11 @@ const EnhancedTable = props => {
   //window.alert(selected)
   let payment = false;
   const { Addpaymentinformation } = props;
-  var query = "";
-  function handleSubmit ( event) {
+//   const query = sessionStorage.getItem('query');
+//   sessionStorage.removeItem('query');
+  var rows = JSON.parse(sessionStorage.getItem('rows'));
 
-        event.preventDefault();
-        // console.log("event ", event);
-
-        let rows = [];
-
-        const Query=query.value
-
-        if (Query != "") {
-          props.chalans.map((chalan, key) => {
-            for (var key1=0 ; key1<10;key1++) {
-              const value = chalan[key1].toString();
-              
-              if (value == Query){
-                // console.log ("Value: " + value  + " , Query: "+ Query + " and Index: " + key)
-                rows.push(key)
-                break
-              }  
-            }
-            })
-          sessionStorage.setItem('query', Query)
-          sessionStorage.setItem('rows', JSON.stringify(rows))
-          history.push({
-            pathname: '/searchchallantable',
-            state: { query: Query }
-          })
-          history.go(0)
-         
-      }
-};
-
-
-
-
+ 
   return (
     <div className={classes.root}>
       {auth.isAuthenticated() ? (
@@ -406,35 +375,11 @@ const EnhancedTable = props => {
       ) : (
         <Navbar />
       )}
+
       <Paper className={classes.paper}>
       
         <EnhancedTableToolbar numSelected={selected.length} selected={selected} chalans ={props.chalans} isPaid={isPaid}  />
-        <TableContainer>
-        <form className={classes.form} Validate onSubmit={handleSubmit}>
-          <TextField
-            margin="normal"
-            required
-            id="query"
-            label="Query"
-            inputRef={el => query = el}
-            name="query"
-            autoComplete="email"
-            autoFocus
-          />
-          {/* <Link to={{ pathname: '/payment', state: { query: query} }}> */}
-          <Button
-            type="submit"
-          
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Search
-          </Button>
-          {/* </Link> */}
-        </form>
-        
-        
+        <TableContainer>        
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
@@ -457,77 +402,83 @@ const EnhancedTable = props => {
                   const isItemSelected = isSelected(key);
                   const labelId = `enhanced-table-checkbox-${key}`;
                   
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => handleClick(event, key)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={key}
-                      selected={isItemSelected}
-                    >
-                       <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                  {columns.map((column, key1) => {
-                    const value = chalan[key1].toString();
-                    
-                    
-                    if (key != 0 && key == selected && key1 == 10){
-                      if (value == '0'){
-                        //payment = value
-                        payment = true
-                        //props.challanselected = selected
-                        //window.alert(payment)
-                        //window.alert(selected)
-                        return(
-                          <div>
-                        {payment ?  <Link to={{ pathname: '/payment', state: { challanselected: selected} }}><Button className={classes.button} color="primary" variant="contained">Pay</Button></Link>
-                             : 
-                            <Typography className = "text-center" component="h3" variant="h3">
-                                P
-                            </Typography>
-         }
-                            
-                            
-                             
-                              </div>
-                          );
-                      }
+                  var findres = rows.indexOf(key)
+                //   console.log("Finding at key " + key +" is: "+ findres + "l: " + rows.length)
 
-                     // return (<div isPaid = {selected}></div>);
-                    }
-                    
-      
-                    if (key1 === 1 || key1 === 0 || key1 === 2 || key1 === 4 || key1 === 7){
-                      
-                      return(
-                      <TableCell padding="checkbox" key={key1} align={column.align} >
+                  if (findres != -1 ){
+                  
+                    return (
+                        <TableRow
+                          hover
+                          onClick={event => handleClick(event, key)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={key}
+                          selected={isItemSelected}
+                        >
+                           <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                      {columns.map((column, key1) => {
+                        const value = chalan[key1].toString();
                         
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-            
-
-                      </TableCell>
-                      );
+                        
+                        if (key != 0 && key == selected && key1 == 10){
+                          if (value == '0'){
+                            //payment = value
+                            payment = true
+                            //props.challanselected = selected
+                            //window.alert(payment)
+                            //window.alert(selected)
+                            return(
+                              <div>
+                            {payment ?  <Link to={{ pathname: '/payment', state: { challanselected: selected} }}><Button className={classes.button} color="primary" variant="contained">Pay</Button></Link>
+                                 : 
+                                <Typography className = "text-center" component="h3" variant="h3">
+                                    P
+                                </Typography>
+             }
+                                
+                                
+                                 
+                                  </div>
+                              );
+                          }
+    
+                         // return (<div isPaid = {selected}></div>);
+                        }
+                        
+          
+                        if (key1 === 1 || key1 === 0 || key1 === 2 || key1 === 4 || key1 === 7){
+                          
+                          return(
+                          <TableCell padding="checkbox" key={key1} align={column.align} >
+                            
+                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                
+    
+                          </TableCell>
+                          );
+                        }
+                        })}
+                        </TableRow>
+    
+                        )
                     }
                     })}
-                    </TableRow>
-
-                    )
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </div>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+          <FormControlLabel
+            control={<Switch checked={dense} onChange={handleChangeDense} />}
+            label="Dense padding"
+          />
+        </div>
+        
+      );
+    }
     
-  );
-}
-
-export default EnhancedTable;
+    export default EnhancedTable;

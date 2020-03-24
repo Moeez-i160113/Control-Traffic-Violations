@@ -17,6 +17,8 @@ import Avatar from '@material-ui/core/Avatar';
 import MenuList from '@material-ui/core/MenuList';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import auth from "./auth";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,6 +56,10 @@ export default function AfterLoginNavbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleCloseLogout = () => {
+    auth.logout();
+    setAnchorEl(null);
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open1 = Boolean(anchorEl);
@@ -68,16 +74,17 @@ export default function AfterLoginNavbar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Link to = '/afterloginhomepage'>
+          <Link to = '/'>
             <a className="navbar-brand" href="#">
               <img src={logo} alt="logo" style={{ width: '50px' }} />
             </a>
           </Link>
           <Typography variant="h6" className={classes.title}>
-            Challans
+           Islamabad Traffic Police
           </Typography>
-          <Link to = '/afterlogintable'><Button className={classes.button} color="primary" variant="contained" >Challans</Button></Link>
-          <Link to = '/afterloginofficertable'><Button className={classes.button} color="primary" variant="contained">Officers</Button></Link>
+          <Link to = '/table'><Button className={classes.button} color="primary" variant="contained" >Challans</Button></Link>
+          <Link to = '/vehicletable'><Button className={classes.button} color="primary" variant="contained" >Vehicles</Button></Link>
+          <Link to = '/officertable'><Button className={classes.button} color="primary" variant="contained">Officers</Button></Link>
           <Avatar aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
              A
           </Avatar>
@@ -90,7 +97,7 @@ export default function AfterLoginNavbar() {
               TransitionComponent={Fade}
             >
               <Link to = '/loginhomepage'><MenuItem onClick={handleClose}>Profile</MenuItem></Link>
-              <Link to = '/'><MenuItem onClick={handleClose}>Logout</MenuItem></Link>
+              <Link to = '/'><MenuItem onClick={handleCloseLogout}>Logout</MenuItem></Link>
             </Menu>
         </Toolbar>
       </AppBar>

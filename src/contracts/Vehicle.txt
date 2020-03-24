@@ -1,0 +1,68 @@
+Contract address:
+https://ropsten.etherscan.io/tx/0x9a2b64c81c13c985f880af84e26bf2fcfe68cbec21c6f3c17e999ae4587ce8e8
+0xFB5faBFF26DCc2dca99958b863dA683E7022bE35
+
+Contract abi:
+[{"constant":false,"inputs":[{"internalType":"string","name":"a1","type":"string"},{"internalType":"string","name":"a2","type":"string"},{"internalType":"string","name":"a3","type":"string"},{"internalType":"uint256","name":"a4","type":"uint256"},{"internalType":"string","name":"a5","type":"string"},{"internalType":"string","name":"a6","type":"string"},{"internalType":"string","name":"a7","type":"string"},{"internalType":"uint256","name":"oi","type":"uint256"}],"name":"addInformation","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"string","name":"a","type":"string"},{"internalType":"string","name":"b","type":"string"}],"name":"compareStrings","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"count","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"getInformation","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"string","name":"reg_no","type":"string"}],"name":"getInformation","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"getOwner","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"_np","type":"string"}],"name":"getVehicleIdFromNumberPlate","outputs":[{"internalType":"int256","name":"","type":"int256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"info_table","outputs":[{"internalType":"string","name":"registration_number","type":"string"},{"internalType":"string","name":"make_name","type":"string"},{"internalType":"string","name":"color","type":"string"},{"internalType":"uint256","name":"vehicle_price","type":"uint256"},{"internalType":"string","name":"engine_no","type":"string"},{"internalType":"string","name":"chasis_no","type":"string"},{"internalType":"string","name":"model","type":"string"},{"internalType":"uint256","name":"owner_id","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"index","type":"uint256"},{"internalType":"uint256","name":"oi","type":"uint256"}],"name":"setOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
+
+Contract:
+pragma solidity ^0.5.0;
+contract Vehicle {
+    uint public count = 0;
+    mapping(uint => information)public info_table;
+    
+    struct information{
+        string registration_number;
+        string make_name;
+        string color;
+        uint vehicle_price;
+        string engine_no;
+        string chasis_no;
+        string model;
+        uint owner_id;
+    }
+    function getVehicleIdFromNumberPlate(string memory _np) public returns(int) {
+        int count1=int(count);
+        for (int i=0;i<count1;i++){
+            if (compareStrings(_np,info_table[uint(i)].registration_number)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    function getCount()public view returns(uint){
+        return count;
+    }
+    
+    function getOwner(uint index) public view returns(uint) {
+        return info_table[index].owner_id;
+    }
+    
+    function addInformation(string memory a1,string memory a2,string memory a3,uint a4,string memory a5,string memory a6,string memory a7,uint oi) public returns  (uint){
+        info_table[count] = information(a1,a2,a3,a4,a5,a6,a7,oi);
+        count++;
+        return count-1;
+    }
+    function setOwner(uint index,uint oi) public{
+        info_table[index].owner_id=oi;
+    }
+    function getInformation(uint index) public view returns(string memory,string memory,string memory,uint,string memory,string memory,string memory) {
+        return (info_table[index].registration_number,info_table[index].make_name,info_table[index].color,info_table[index].vehicle_price,info_table[index].engine_no,info_table[index].chasis_no,info_table[index].model);
+    }
+    
+    
+    function getInformation(string memory reg_no) public view returns(string memory,string memory,string memory,uint,string memory,string memory,string memory){
+        for(uint i=0;i<count;i++){
+            if (compareStrings(reg_no,info_table[i].registration_number)){
+                return (info_table[i].registration_number,info_table[i].make_name,info_table[i].color,info_table[i].vehicle_price,info_table[i].engine_no,info_table[i].chasis_no,info_table[i].model);
+            }
+        }
+    }
+    
+    function compareStrings (string memory a, string memory b) public view returns (bool) {
+        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))) );
+    }   
+}
+
+    

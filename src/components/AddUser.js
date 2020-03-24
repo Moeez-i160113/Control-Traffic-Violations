@@ -60,7 +60,7 @@ const styles = {
 
 
 
-class AddUser extends React.Component {
+class AddUser extends React.PureComponent {
     render() {
        const { classes } = this.props;
         const handleSubmit = event => {
@@ -149,7 +149,7 @@ class AddUser extends React.Component {
                 label="Password"
                 required
                 fullWidth
-                type="text"
+                type="password"
                 className={classes.textField}
                 inputRef={el => this.password = el}
                 margin="normal"

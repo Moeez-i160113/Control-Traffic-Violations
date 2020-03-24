@@ -6,50 +6,54 @@ import Title from './Title'
 
 const data = [
   {
-    name: 'Monday', uv: 4000, pv: 2400, amt: 2400,
+    day: 'Monday', offenses: 4000, amount: 2400, amt: 2400,
   },
   {
-    name: 'Tuesday', uv: 3000, pv: 1398, amt: 2210,
+    day: 'Tuesday', offenses: 3000, amount: 1398, amt: 2210,
   },
   {
-    name: 'Wednesday', uv: 2000, pv: 9800, amt: 2290,
+    day: 'Wednesday', offenses: 2000, amount: 9800, amt: 2290,
   },
   {
-    name: 'Thursday', uv: 2780, pv: 3908, amt: 2000,
+    day: 'Thursday', offenses: 2780, amount: 3908, amt: 2000,
   },
   {
-    name: 'Friday', uv: 1890, pv: 4800, amt: 2181,
+    day: 'Friday', offenses: 1890, amount: 4800, amt: 2181,
   },
   {
-    name: 'Saturday', uv: 2390, pv: 3800, amt: 2500,
+    day: 'Saturday', offenses: 2390, amount: 3800, amt: 2500,
   },
   {
-    name: 'Sunday', uv: 3490, pv: 4300, amt: 2100,
+    day: 'Sunday', offenses: 3490, amount: 4300, amt: 2100,
   },
 ];
+
 
 export default class WeeklyChallans extends PureComponent {
   static jsfiddleUrl = 'https://jsfiddle.net/alidingling/q4eonc12/';
 
+
   render() {
+    console.log(this.props.daily_count)
+    
     return (
     <React.Fragment>
-      <Title>Weekly Reports</Title>
+      <Title>Daily Amount Collection Reports</Title>
       <BarChart
         width={500}
         height={300}
-        data={data}
+        data={this.props.daily_count}
         margin={{
           top: 5, right: 30, left: 20, bottom: 5,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="day" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="pv" fill="#8884d8" background={{ fill: '#eee' }} />
-        <Bar dataKey="uv" fill="#82ca9d" />
+        <Bar dataKey="amount" fill="#8884d8" background={{ fill: '#eee' }} />
+        <Bar dataKey="offenses" fill="#82ca9d" />
       </BarChart>
     </React.Fragment>
     );

@@ -13,11 +13,18 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withStyles } from "@material-ui/core/styles";
+import AfterLoginNavbar from './AfterLoginNavbar'
+import auth from './auth'
+
 
 const styles = theme => ({
   '@global': {
     body: {
       backgroundColor: theme.palette.common.white,
+      backgroundImage: "url(" + " logo.jpg" + ")",
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat'
     },
   },
   paper: {
@@ -57,6 +64,7 @@ class SignIn extends React.Component {
     render() {
        const { classes } = this.props;
         const handleSubmit = event => {
+
             event.preventDefault();
             // alert(this.text);
             console.log("event ", event);
@@ -72,7 +80,11 @@ class SignIn extends React.Component {
         };
   return (
     <div>
-    <Navbar />
+      {auth.isAuthenticated() ? (
+        <AfterLoginNavbar /> 
+      ) : (
+        <Navbar />
+      )}
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -89,7 +101,7 @@ class SignIn extends React.Component {
             required
             fullWidth
             id="my_email"
-            label="Email Address"
+            label="User ID"
             inputRef={el => this.my_email = el}
             name="my_email"
             autoComplete="email"
@@ -107,11 +119,12 @@ class SignIn extends React.Component {
             id="my_password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
-          <Link href="/loginhomepage" variant="body2"><Button
+          /> */}
+          {/* <Link href="/loginhomepage" variant="body2"> */}
+            <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -120,19 +133,14 @@ class SignIn extends React.Component {
           >
             Sign In
           </Button>
-          </Link>
-          <Grid container>
+          {/* </Link> */}
+          {/* <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </div>
       <Box mt={8}>

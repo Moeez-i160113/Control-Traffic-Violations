@@ -22,16 +22,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import logo from './logo.jpg';
+
 import {Link} from 'react-router-dom';
 import Navbar from './Navbar'
 import AfterLoginNavbar from './AfterLoginNavbar'
-import auth from './auth'
+import auth from "./auth";
 
 
 import history from './history';
 import Popup from "reactjs-popup";
-import Details from "./Details";
+import OfficerDetails from "./OfficerDetails";
 import "./styles.css";
 import Payment from './Payment'
 import LoginHomePage from './LoginHomePage';
@@ -66,61 +66,27 @@ function stableSort(array, comparator) {
 }
 
 const columns = [
-    { id: 'challan_number_in_day', disablePadding: true, label: '#', minWidth: 40 },
-    { id: 'vehicle_number_plate', label: 'Vehicle Number Plate', minWidth: 40 },
-    { id: 'date', label: 'Date', minWidth: 40 },
-    {
-      id: 'violation_type',
-      label: 'Violation Type',
-      minWidth: 40,
-      align: 'right',
-      format: value => value.toLocaleString(),
-    },
-    {
-      id: 'driver_cnic',
-      label: 'Driver CNIC',
-      minWidth: 70,
-      format: value => value.toLocaleString(),
-    },
-      {
-      id: 'latitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_number_part',
-      label: '',
-      minWidth: 1,
-    },
-      {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-      
-    
-  
-  ];
+
+  { id: 'name', label: 'Name', minWidth: 10 },
+  { id: 'CNIC', label: 'CNIC', minWidth: 10, text: 'bold' },
+  {
+    id: 'designation',
+    label: 'Designation',
+    minWidth: 10,
+  },
+  {
+    id: 'Address',
+    label: '',
+    minWidth: 1,
+  },
+  {
+    id: 'password',
+    label: '',
+    minWidth: 1,
+  },
+  { id: 'username', label: '', minWidth: 1 },
+  { id: 'id', label: '', minWidth: 1 },
+];  
   
 
 function EnhancedTableHead(props) {
@@ -135,10 +101,10 @@ function EnhancedTableHead(props) {
         
       <TableCell padding="checkbox">
           <Checkbox
-            indeterminate={numSelected > 0 && numSelected < props.chalanCount}
-            checked={props.chalanCount > 0 && numSelected === props.chalanCount}
+            indeterminate={numSelected > 0 && numSelected < props.officerCount}
+            checked={props.officerCount > 0 && numSelected === props.officerCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all chalans' }}
+            inputProps={{ 'aria-label': 'select all officers' }}
           />
         </TableCell>
         {columns.map(column => (
@@ -201,7 +167,7 @@ const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
   const { selected } = props;
-  const { chalans } = props; 
+  const { officers } = props; 
   const { isPaid } = props;
   //window.alert('inside')
   //window.alert(isPaid);
@@ -217,7 +183,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       ) : (
         <Typography className = "text-center" component="h3" variant="h3">
-          Violations Informatio
+          Search Result
         </Typography>
       )}
 
@@ -225,14 +191,14 @@ const EnhancedTableToolbar = props => {
         <Tooltip title="Print">
 
       <Popup modal trigger={<Button  color="secondary" variant="contained" >Details</Button>}>
-        {close => <Details close={close} selected={selected} chalans ={props.chalans} />}
+        {close => <OfficerDetails close={close} selected={selected} officers ={props.officers} />}
       </Popup>
           
 
         </Tooltip>
       ) : (
         <Typography className = "text-center" component="h3" variant="h3">
-          n
+          s
         </Typography>
       )}
     </Toolbar>
@@ -267,7 +233,7 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: 50,
-    marginLeft: theme.spacing(55)
+    marginLeft: theme.spacing(64)
     
   },
   visuallyHidden: {
@@ -313,7 +279,7 @@ const EnhancedTable = props => {
   const handleSelectAllClick = event => {
     if (event.target.checked) {
 
-      const newSelecteds = props.chalans.map(n => parseInt(n[0], 10));
+      const newSelecteds = props.officers.map(n => parseInt(n[0], 10));
       //window.alert(newSelecteds)
       setSelected(newSelecteds);
       return;
@@ -363,42 +329,11 @@ const EnhancedTable = props => {
   //window.alert(selected)
   let payment = false;
   const { Addpaymentinformation } = props;
-  var query = "";
-  function handleSubmit ( event) {
+//   const query = sessionStorage.getItem('query');
+//   sessionStorage.removeItem('query');
+  var officerrows = JSON.parse(sessionStorage.getItem('officerrows'));
 
-        event.preventDefault();
-        // console.log("event ", event);
-
-        let rows = [];
-
-        const Query=query.value
-
-        if (Query != "") {
-          props.chalans.map((chalan, key) => {
-            for (var key1=0 ; key1<10;key1++) {
-              const value = chalan[key1].toString();
-              
-              if (value == Query){
-                // console.log ("Value: " + value  + " , Query: "+ Query + " and Index: " + key)
-                rows.push(key)
-                break
-              }  
-            }
-            })
-          sessionStorage.setItem('query', Query)
-          sessionStorage.setItem('rows', JSON.stringify(rows))
-          history.push({
-            pathname: '/searchchallantable',
-            state: { query: Query }
-          })
-          history.go(0)
-         
-      }
-};
-
-
-
-
+ 
   return (
     <div className={classes.root}>
       {auth.isAuthenticated() ? (
@@ -406,35 +341,11 @@ const EnhancedTable = props => {
       ) : (
         <Navbar />
       )}
+
       <Paper className={classes.paper}>
       
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} chalans ={props.chalans} isPaid={isPaid}  />
-        <TableContainer>
-        <form className={classes.form} Validate onSubmit={handleSubmit}>
-          <TextField
-            margin="normal"
-            required
-            id="query"
-            label="Query"
-            inputRef={el => query = el}
-            name="query"
-            autoComplete="email"
-            autoFocus
-          />
-          {/* <Link to={{ pathname: '/payment', state: { query: query} }}> */}
-          <Button
-            type="submit"
-          
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Search
-          </Button>
-          {/* </Link> */}
-        </form>
-        
-        
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} officers ={props.officers} isPaid={isPaid}  />
+        <TableContainer>        
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
@@ -448,86 +359,92 @@ const EnhancedTable = props => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rows={props.chalanCount.length}
+              officerrows={props.officerCount.length}
             />
             <TableBody>
 
               {
-                props.chalans.map((chalan, key) => {
+                props.officers.map((officer, key) => {
                   const isItemSelected = isSelected(key);
                   const labelId = `enhanced-table-checkbox-${key}`;
                   
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => handleClick(event, key)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={key}
-                      selected={isItemSelected}
-                    >
-                       <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                  {columns.map((column, key1) => {
-                    const value = chalan[key1].toString();
-                    
-                    
-                    if (key != 0 && key == selected && key1 == 10){
-                      if (value == '0'){
-                        //payment = value
-                        payment = true
-                        //props.challanselected = selected
-                        //window.alert(payment)
-                        //window.alert(selected)
-                        return(
-                          <div>
-                        {payment ?  <Link to={{ pathname: '/payment', state: { challanselected: selected} }}><Button className={classes.button} color="primary" variant="contained">Pay</Button></Link>
-                             : 
-                            <Typography className = "text-center" component="h3" variant="h3">
-                                P
-                            </Typography>
-         }
-                            
-                            
-                             
-                              </div>
-                          );
-                      }
+                  var findres = officerrows.indexOf(key)
+                //   console.log("Finding at key " + key +" is: "+ findres + "l: " + officerow.length)
 
-                     // return (<div isPaid = {selected}></div>);
-                    }
-                    
-      
-                    if (key1 === 1 || key1 === 0 || key1 === 2 || key1 === 4 || key1 === 7){
-                      
-                      return(
-                      <TableCell padding="checkbox" key={key1} align={column.align} >
+                  if (findres != -1 ){
+                  
+                    return (
+                        <TableRow
+                          hover
+                          onClick={event => handleClick(event, key)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={key}
+                          selected={isItemSelected}
+                        >
+                           <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                      {columns.map((column, key1) => {
+                        const value = officer[key1].toString();
                         
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-            
-
-                      </TableCell>
-                      );
+                        
+                        if (key != 0 && key == selected && key1 == 5 ){
+                          //payment = value
+                          // payment = true
+                          //props.officerselected = selected
+                          //window.alert(payment)
+                          //window.alert(selected)
+                          return(
+                            <div>
+                          {<Link to={{ pathname: '/updateofficer', state: { officerselected: selected} }}>
+                            <Button className={classes.button} color="primary" variant="contained">
+                              Update
+                            </Button>
+                          </Link>
+              
+  
+                          }
+                          </div>   
+                              
+                               
+                                
+                            );
+                        
+  
+                       // return (<div isPaid = {selected}></div>);
+                      }
+                        
+          
+                      if (key1 === 1 || key1 === 2 || key1 === 4){
+                          return(
+                          <TableCell padding="checkbox" key={key1} align={column.align} >
+                            
+                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                
+    
+                          </TableCell>
+                          );
+                        }
+                        })}
+                        </TableRow>
+    
+                        )
                     }
                     })}
-                    </TableRow>
-
-                    )
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </div>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+          <FormControlLabel
+            control={<Switch checked={dense} onChange={handleChangeDense} />}
+            label="Dense padding"
+          />
+        </div>
+        
+      );
+    }
     
-  );
-}
-
-export default EnhancedTable;
+    export default EnhancedTable;

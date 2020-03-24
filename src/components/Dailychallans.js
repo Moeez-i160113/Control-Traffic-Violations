@@ -1,54 +1,57 @@
-import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-import Title from './Title';
-
-// Generate Sales Data
-function createData(time, amount) {
-  return { time, amount };
-}
+import React, { PureComponent } from 'react';
+import {
+  ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  Legend,
+} from 'recharts';
+import Title from './Title'
 
 const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
+  {
+    day: 'Page A', offenses: 590, amount: 800, amt: 1400,
+  },
+  {
+    day: 'Page B', offenses: 868, amount: 967, amt: 1506,
+  },
+  {
+    day: 'Page C', offenses: 1397, amount: 1098, amt: 989,
+  },
+  {
+    day: 'Page D', offenses: 1480, amount: 1200, amt: 1228,
+  },
+  {
+    day: 'Page E', offenses: 1520, amount: 1108, amt: 1100,
+  },
+  {
+    day: 'Page F', offenses: 1400, amount: 680, amt: 1700,
+  },
 ];
 
-export default function Chart() {
-  const theme = useTheme();
+export default class Example extends PureComponent {
+  static jsfiddleUrl = 'https://jsfiddle.net/alidingling/94sebfL8/';
 
-  return (
-    <React.Fragment>
-      <Title>Today</Title>
-      <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 30,
-          }}
-        >
-          <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
-            <Label
-              angle={270}
-              position="top"
-              style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
-            >
-              Challans
-            </Label>
-          </YAxis>
-          <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
-        </LineChart>
-      </ResponsiveContainer>
-    </React.Fragment>
-  );
+  render() {
+    const {monthly_count} = this.props;
+    return (
+      <React.Fragment>
+      <Title>Daily Challans Reports</Title>
+      <ComposedChart
+        width={500}
+        height={400}
+        data={this.props.daily_count}
+        margin={{
+          top: 20, right: 20, bottom: 20, left: 20,
+        }}
+      >
+        <CartesianGrid stroke="#f5f5f5" />
+        <XAxis dataKey="day" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="offenses" barSize={20} fill="#413ea0" />
+        <Line type="monotone" dataKey="offenses" stroke="#ff7300" />
+      </ComposedChart>
+
+      </React.Fragment> 
+      );
+  }
 }

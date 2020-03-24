@@ -1,10 +1,13 @@
+
+
 import React from 'react';
+
+import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -22,21 +25,19 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import logo from './logo.jpg';
+
 import {Link} from 'react-router-dom';
 import Navbar from './Navbar'
 import AfterLoginNavbar from './AfterLoginNavbar'
 import auth from './auth'
 
-
 import history from './history';
+
 import Popup from "reactjs-popup";
-import Details from "./Details";
+import VehicleDetails from "./VehicleDetails";
 import "./styles.css";
-import Payment from './Payment'
 import LoginHomePage from './LoginHomePage';
 import LoginDailyChallans from './LoginDailyChallans';
-import { render } from 'react-dom';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -65,61 +66,36 @@ function stableSort(array, comparator) {
   return stabilizedThis.map(el => el[0]);
 }
 
+// return (registration_number, make_name, color, vehicle_price, engine_no, chasis_no, model);
+    
 const columns = [
-    { id: 'challan_number_in_day', disablePadding: true, label: '#', minWidth: 40 },
-    { id: 'vehicle_number_plate', label: 'Vehicle Number Plate', minWidth: 40 },
-    { id: 'date', label: 'Date', minWidth: 40 },
+    { id: 'registration_number', disablePadding: true, label: 'Registration Number', minWidth: 70 },
+    { id: 'make_name', label: ' Maker ', minWidth: 70 },
+    { id: 'color', label: ' Colour ', minWidth: 70 },
     {
-      id: 'violation_type',
-      label: 'Violation Type',
-      minWidth: 40,
+      id: 'vehicle_price',
+      label: '',
+      minWidth: 1,
       align: 'right',
       format: value => value.toLocaleString(),
     },
     {
-      id: 'driver_cnic',
-      label: 'Driver CNIC',
-      minWidth: 70,
+      id: 'engine_no',
+      label: '',
+      minWidth: 1,
       format: value => value.toLocaleString(),
     },
       {
-      id: 'latitude_decimal_part',
+      id: 'chasis_no',
       label: '',
       minWidth: 1,
     },
     {
-      id: 'longitude_number_part',
-      label: '',
-      minWidth: 1,
-    },
-      {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
-    },
-    {
-      id: 'longitude_decimal_part',
-      label: '',
-      minWidth: 1,
+      id: 'model',
+      label: 'Model ',
+      minWidth: 70,
     },
       
-    
-  
   ];
   
 
@@ -135,10 +111,10 @@ function EnhancedTableHead(props) {
         
       <TableCell padding="checkbox">
           <Checkbox
-            indeterminate={numSelected > 0 && numSelected < props.chalanCount}
-            checked={props.chalanCount > 0 && numSelected === props.chalanCount}
+            indeterminate={numSelected > 0 && numSelected < props.vehicleCount}
+            checked={props.vehicleCount > 0 && numSelected === props.vehicleCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all chalans' }}
+            inputProps={{ 'aria-label': 'select all Vehicles' }}
           />
         </TableCell>
         {columns.map(column => (
@@ -201,8 +177,7 @@ const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
   const { selected } = props;
-  const { chalans } = props; 
-  const { isPaid } = props;
+  const { vehicles } = props; 
   //window.alert('inside')
   //window.alert(isPaid);
   return (
@@ -217,7 +192,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       ) : (
         <Typography className = "text-center" component="h3" variant="h3">
-          Violations Informatio
+          Vehicles Informatio
         </Typography>
       )}
 
@@ -225,7 +200,7 @@ const EnhancedTableToolbar = props => {
         <Tooltip title="Print">
 
       <Popup modal trigger={<Button  color="secondary" variant="contained" >Details</Button>}>
-        {close => <Details close={close} selected={selected} chalans ={props.chalans} />}
+        {close => <VehicleDetails close={close} selected={selected} vehicles ={props.vehicles} />}
       </Popup>
           
 
@@ -266,8 +241,8 @@ const useStyles = makeStyles(theme => ({
 
   },
   table: {
-    minWidth: 50,
-    marginLeft: theme.spacing(55)
+    minWidth: 1000,
+    marginLeft: theme.spacing(60)
     
   },
   visuallyHidden: {
@@ -299,7 +274,7 @@ const EnhancedTable = props => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
-  var [isPaid] = React.useState([]);
+  
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -313,7 +288,7 @@ const EnhancedTable = props => {
   const handleSelectAllClick = event => {
     if (event.target.checked) {
 
-      const newSelecteds = props.chalans.map(n => parseInt(n[0], 10));
+      const newSelecteds = props.vehicles.map(n => parseInt(n[0], 10));
       //window.alert(newSelecteds)
       setSelected(newSelecteds);
       return;
@@ -361,41 +336,38 @@ const EnhancedTable = props => {
 
   const isSelected = name => selected.indexOf(name) !== -1;
   //window.alert(selected)
-  let payment = false;
-  const { Addpaymentinformation } = props;
   var query = "";
   function handleSubmit ( event) {
 
-        event.preventDefault();
-        // console.log("event ", event);
+    event.preventDefault();
+    // console.log("event ", event);
 
-        let rows = [];
+    let vehiclerows = [];
 
-        const Query=query.value
+    const Query=query.value
 
-        if (Query != "") {
-          props.chalans.map((chalan, key) => {
-            for (var key1=0 ; key1<10;key1++) {
-              const value = chalan[key1].toString();
-              
-              if (value == Query){
-                // console.log ("Value: " + value  + " , Query: "+ Query + " and Index: " + key)
-                rows.push(key)
-                break
-              }  
-            }
-            })
-          sessionStorage.setItem('query', Query)
-          sessionStorage.setItem('rows', JSON.stringify(rows))
-          history.push({
-            pathname: '/searchchallantable',
-            state: { query: Query }
-          })
-          history.go(0)
-         
-      }
+    if (Query != "") {
+      props.vehicles.map((vehicle, key) => {
+        for (var key1=0 ; key1<7;key1++) {
+          const value = vehicle[key1].toString();
+          
+          if (value == Query){
+            // console.log ("Value: " + value  + " , Query: "+ Query + " and Index: " + key)
+            vehiclerows.push(key)
+            break
+          }  
+        }
+        })
+      sessionStorage.setItem('query', Query)
+      sessionStorage.setItem('vehiclerows', JSON.stringify(vehiclerows))
+      history.push({
+        pathname: '/searchvehicletable',
+        state: { query: Query }
+      })
+      history.go(0)
+     
+  }
 };
-
 
 
 
@@ -407,8 +379,8 @@ const EnhancedTable = props => {
         <Navbar />
       )}
       <Paper className={classes.paper}>
-      
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} chalans ={props.chalans} isPaid={isPaid}  />
+     
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} vehicles ={props.vehicles}  />
         <TableContainer>
         <form className={classes.form} Validate onSubmit={handleSubmit}>
           <TextField
@@ -433,8 +405,6 @@ const EnhancedTable = props => {
           </Button>
           {/* </Link> */}
         </form>
-        
-        
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
@@ -448,12 +418,12 @@ const EnhancedTable = props => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rows={props.chalanCount.length}
+              rows={props.vehicleCount.length}
             />
             <TableBody>
 
               {
-                props.chalans.map((chalan, key) => {
+                props.vehicles.map((vehicle, key) => {
                   const isItemSelected = isSelected(key);
                   const labelId = `enhanced-table-checkbox-${key}`;
                   
@@ -472,36 +442,10 @@ const EnhancedTable = props => {
                           inputProps={{ 'aria-labelledby': labelId }}
                       />
                   {columns.map((column, key1) => {
-                    const value = chalan[key1].toString();
-                    
-                    
-                    if (key != 0 && key == selected && key1 == 10){
-                      if (value == '0'){
-                        //payment = value
-                        payment = true
-                        //props.challanselected = selected
-                        //window.alert(payment)
-                        //window.alert(selected)
-                        return(
-                          <div>
-                        {payment ?  <Link to={{ pathname: '/payment', state: { challanselected: selected} }}><Button className={classes.button} color="primary" variant="contained">Pay</Button></Link>
-                             : 
-                            <Typography className = "text-center" component="h3" variant="h3">
-                                P
-                            </Typography>
-         }
-                            
-                            
-                             
-                              </div>
-                          );
-                      }
-
-                     // return (<div isPaid = {selected}></div>);
-                    }
-                    
-      
-                    if (key1 === 1 || key1 === 0 || key1 === 2 || key1 === 4 || key1 === 7){
+                    const value = vehicle[key1].toString();
+                    // return (registration_number 0, make_name 1 , color 2, vehicle_price, engine_no, chasis_no, model 6);
+                          
+                    if (key1 === 1 || key1 === 0 || key1 === 2 || key1 === 6){
                       
                       return(
                       <TableCell padding="checkbox" key={key1} align={column.align} >

@@ -1,0 +1,383 @@
+contract address : 
+0xC546913bE7E9D6763D543cdf812b724A05F15C48
+
+[{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"},{"internalType":"string","name":"_username","type":"string"},{"internalType":"string","name":"_password","type":"string"}],"name":"Login","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"OfficerCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"},{"internalType":"uint256","name":"_challanNo","type":"uint256"}],"name":"add_challan_to_warden","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"all_officers","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"CNIC","type":"string"},{"internalType":"string","name":"Address","type":"string"},{"internalType":"string","name":"designation","type":"string"},{"internalType":"string","name":"password","type":"string"},{"internalType":"string","name":"username","type":"string"},{"internalType":"uint256","name":"challan_count","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"string","name":"a","type":"string"},{"internalType":"string","name":"b","type":"string"}],"name":"compareStrings","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_CNIC","type":"string"},{"internalType":"string","name":"_address","type":"string"},{"internalType":"string","name":"_designation","type":"string"},{"internalType":"string","name":"_username","type":"string"},{"internalType":"string","name":"_password","type":"string"}],"name":"createOfficer","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getAddress","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_officerid","type":"uint256"}],"name":"getChallanCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getCnic","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getDesignation","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getInformation","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getName","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getPassword","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"getUsername","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"},{"internalType":"uint256","name":"_cno","type":"uint256"}],"name":"remove_challan","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"_address","type":"string"}],"name":"setAddress","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"cnic","type":"string"}],"name":"setCnic","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"_designation","type":"string"}],"name":"setDesignation","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"_name","type":"string"}],"name":"setName","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"_password","type":"string"}],"name":"setPassword","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"_username","type":"string"}],"name":"setUsername","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_id","type":"uint256"}],"name":"view_challan_history_by_officer","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]
+contract :
+pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
+
+contract Officer {
+    
+    uint public OfficerCount = 0;
+
+    mapping(uint => Officers)public  all_officers;     
+
+    constructor() public {
+        
+    }
+
+    struct Officers {
+        uint id;
+        string name;
+        string CNIC;
+        string Address;
+        string designation;
+        string password;
+        string username;
+	    mapping(uint=>uint) challans;
+	    uint challan_count;
+	    
+    }
+    function setUsername(uint id,string memory _username) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].username=_username;	
+            return 1;	
+            	
+        }   	
+        return 0;	
+    }	
+    function setPassword(uint id,string memory _password) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].password=_password;	
+            return 1;	
+        }   	
+        return 0;	
+    }	
+    function setDesignation(uint id,string memory _designation) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].designation=_designation;	
+            return 1;	
+            	
+        }   	
+        return 0;	
+    }	
+    function setAddress(uint id,string memory _address) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].Address=_address;	
+            return 1;	
+            	
+        }   	
+        return 0;
+    }	
+    function setName(uint id,string memory _name) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].name=_name;	
+            return 1;	
+            	
+        }    	
+        return 0;	
+    }	
+    function setCnic(uint id,string memory cnic) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].CNIC=cnic;	
+            return 1;	
+            	
+        }   	
+        return 0;	
+    }
+    function Login (uint _id, string memory _username, string memory _password) public returns(string memory) {
+    if(compareStrings(all_officers[_id].username , _username) && compareStrings(all_officers[_id].password ,_password)){
+		return strConcat(all_officers[_id].name,all_officers[_id].CNIC,all_officers[_id].Address,all_officers[_id].designation);
+	}else{
+		return "1";
+	    }
+    }
+    function getCount()public view returns(uint){
+        return OfficerCount;
+    }
+    function getChallanCount(uint _officerid)public returns(uint){
+        if(_officerid<OfficerCount){
+            return all_officers[_officerid].challan_count;
+        }
+        
+    }
+    function remove_challan(uint _id,uint _cno) public returns(string memory){	
+        if(all_officers[_id].challan_count>0){	
+            all_officers[_id].challans[_cno]=all_officers[_id].challans[all_officers[_id].challan_count];	
+            all_officers[_id].challan_count--;	
+            return "t";
+        }
+        return ";";
+    }
+    function getInformation(uint id)public view returns(uint ,string memory,string memory,string memory,string memory,string memory,string memory){
+        return (all_officers[id].id,all_officers[id].name,all_officers[id].CNIC,all_officers[id].Address,all_officers[id].designation,all_officers[id].password,all_officers[id].username);
+    }
+    function view_challan_history_by_officer(uint _id) public returns(string memory) {
+        string memory ret_val="";
+        for (uint i=0;i<=all_officers[_id].challan_count;i++){
+            ret_val=strConcat(ret_val,uint2str(all_officers[_id].challans[i]));
+            ret_val=strConcat(ret_val,":");
+        }
+        return ret_val;
+    }
+    function add_challan_to_warden(uint _id,uint _challanNo) public returns (uint){
+        
+        all_officers[_id].challans[all_officers[_id].challan_count]= _challanNo;
+        all_officers[_id].challan_count++;
+
+    }
+    function createOfficer(string memory _name, string memory _CNIC, string memory _designation,string memory _username, string memory _password) public returns(uint){
+        require(bytes(_name).length > 0);
+        require(bytes(_CNIC).length > 12);
+        all_officers[OfficerCount] = Officers(OfficerCount, _name, _CNIC, "",_designation,_password,_username,0);
+        OfficerCount ++;
+        return OfficerCount-1;
+    } 
+    
+    function compareStrings (string memory a, string memory b) public view
+       returns (bool) {
+    return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))) );
+
+       }
+
+    function strConcat(string memory _a, string memory _b, string memory _c, string memory _d) internal returns (string memory){
+        bytes memory _ba = bytes(_a);
+        bytes memory _bb = bytes(_b);
+        bytes memory _bc = bytes(_c);
+        bytes memory _bd = bytes(_d);
+        bytes memory _bcomma = bytes(",");
+        string memory abcd = new string(_ba.length + _bb.length + _bc.length + _bd.length+3 );
+        bytes memory babcde = bytes(abcd);
+        uint k = 0;
+        for (uint i = 0; i < _ba.length; i++) babcde[k++] = _ba[i];
+        babcde[k++]=_bcomma[0];
+        for (uint i = 0; i < _bb.length; i++) babcde[k++] = _bb[i];
+        babcde[k++]=_bcomma[0];
+        for (uint i = 0; i < _bc.length; i++) babcde[k++] = _bc[i];
+        babcde[k++]=_bcomma[0];
+        for (uint i = 0; i < _bd.length; i++) babcde[k++] = _bd[i];
+        return string(babcde);
+    }
+    function strConcat(string memory _a, string memory _b) internal returns (string memory){
+        bytes memory _ba = bytes(_a);
+        bytes memory _bb = bytes(_b);
+        bytes memory _bcomma = bytes(",");
+        string memory abcd = new string(_ba.length + _bb.length+1);
+        bytes memory babcde = bytes(abcd);
+        uint k = 0;
+        for (uint i = 0; i < _ba.length; i++) babcde[k++] = _ba[i];
+        babcde[_ba.length]=_bcomma[0];
+        for (uint i = 0; i < _bb.length; i++) babcde[k++] = _bb[i];
+        
+        return string(babcde);
+    }
+    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint j = _i;
+        uint len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint k = len - 1;
+        while (_i != 0) {
+            bstr[k--] = byte(uint8(48 + _i % 10));
+            _i /= 10;
+        }
+        return string(bstr);
+    }
+    
+}
+
+pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
+
+contract Officer {
+    
+    uint public OfficerCount = 0;
+
+    mapping(uint => Officers)public  all_officers;     
+
+    constructor() public {
+        
+    }
+
+    struct Officers {
+        uint id;
+        string name;
+        string CNIC;
+        string Address;
+        string designation;
+        string password;
+        string username;
+	    mapping(uint=>uint) challans;
+	    uint challan_count;
+	    
+    }
+    function getName(uint id) public returns(string memory){
+        return all_officers[id].name;
+    }
+    function getCnic(uint id) public returns(string memory){
+        return all_officers[id].CNIC;
+    }
+    function getAddress(uint id) public returns(string memory){
+        return all_officers[id].Address;
+    }
+
+    function getDesignation(uint id) public returns(string memory){
+        return all_officers[id].designation;
+    }
+    function getPassword(uint id) public returns(string memory){
+        return all_officers[id].password;
+    }
+    function getUsername(uint id) public returns(string memory){
+        return all_officers[id].username;
+    }
+
+
+    function setUsername(uint id,string memory _username) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].username=_username;	
+            return 1;	
+            	
+        }   	
+        return 0;	
+    }	
+    function setPassword(uint id,string memory _password) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].password=_password;	
+            return 1;	
+        }   	
+        return 0;	
+    }	
+    function setDesignation(uint id,string memory _designation) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].designation=_designation;	
+            return 1;	
+            	
+        }   	
+        return 0;	
+    }	
+    function setAddress(uint id,string memory _address) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].Address=_address;	
+            return 1;	
+            	
+        }   	
+        return 0;
+    }	
+    function setName(uint id,string memory _name) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].name=_name;	
+            return 1;	
+            	
+        }    	
+        return 0;	
+    }	
+    function setCnic(uint id,string memory cnic) public returns(uint){	
+        if(id<OfficerCount){	
+            all_officers[id].CNIC=cnic;	
+            return 1;	
+            	
+        }   	
+        return 0;	
+    }
+    function Login (uint _id, string memory _username, string memory _password) public returns(string memory) {
+    if(compareStrings(all_officers[_id].username , _username) && compareStrings(all_officers[_id].password ,_password)){
+		return strConcat(all_officers[_id].name,all_officers[_id].CNIC,all_officers[_id].Address,all_officers[_id].designation);
+	}else{
+		return "1";
+	    }
+    }
+    function getCount()public view returns(uint){
+        return OfficerCount;
+    }
+    function getChallanCount(uint _officerid)public returns(uint){
+        if(_officerid<OfficerCount){
+            return all_officers[_officerid].challan_count;
+        }
+        
+    }
+    function remove_challan(uint _id,uint _cno) public returns(string memory){	
+        if(all_officers[_id].challan_count>0){	
+            all_officers[_id].challans[_cno]=all_officers[_id].challans[all_officers[_id].challan_count];	
+            all_officers[_id].challan_count--;	
+            return "t";
+        }
+        return ";";
+    }
+    function getInformation(uint id)public view returns(uint ,string memory,string memory,string memory,string memory,string memory,string memory){
+        return (all_officers[id].id,all_officers[id].name,all_officers[id].CNIC,all_officers[id].Address,all_officers[id].designation,all_officers[id].password,all_officers[id].username);
+    }
+    function view_challan_history_by_officer(uint _id) public returns(string memory) {
+        string memory ret_val="";
+        for (uint i=0;i<=all_officers[_id].challan_count;i++){
+            ret_val=strConcat(ret_val,uint2str(all_officers[_id].challans[i]));
+            ret_val=strConcat(ret_val,":");
+        }
+        return ret_val;
+    }
+    function add_challan_to_warden(uint _id,uint _challanNo) public returns (uint){
+        
+        all_officers[_id].challans[all_officers[_id].challan_count]= _challanNo;
+        all_officers[_id].challan_count++;
+
+    }
+    function createOfficer(string memory _name, string memory _CNIC, string memory _address,string memory _designation,string memory _username, string memory _password) public returns(uint){
+        require(bytes(_name).length > 0);
+        require(bytes(_CNIC).length > 12);
+        all_officers[OfficerCount] = Officers(OfficerCount, _name, _CNIC, _address,_designation,_password,_username,0);
+        OfficerCount ++;
+        return OfficerCount-1;
+    } 
+    
+    function compareStrings (string memory a, string memory b) public view
+       returns (bool) {
+    return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))) );
+
+       }
+
+    function strConcat(string memory _a, string memory _b, string memory _c, string memory _d) internal returns (string memory){
+        bytes memory _ba = bytes(_a);
+        bytes memory _bb = bytes(_b);
+        bytes memory _bc = bytes(_c);
+        bytes memory _bd = bytes(_d);
+        bytes memory _bcomma = bytes(",");
+        string memory abcd = new string(_ba.length + _bb.length + _bc.length + _bd.length+3 );
+        bytes memory babcde = bytes(abcd);
+        uint k = 0;
+        for (uint i = 0; i < _ba.length; i++) babcde[k++] = _ba[i];
+        babcde[k++]=_bcomma[0];
+        for (uint i = 0; i < _bb.length; i++) babcde[k++] = _bb[i];
+        babcde[k++]=_bcomma[0];
+        for (uint i = 0; i < _bc.length; i++) babcde[k++] = _bc[i];
+        babcde[k++]=_bcomma[0];
+        for (uint i = 0; i < _bd.length; i++) babcde[k++] = _bd[i];
+        return string(babcde);
+    }
+    function strConcat(string memory _a, string memory _b) internal returns (string memory){
+        bytes memory _ba = bytes(_a);
+        bytes memory _bb = bytes(_b);
+        bytes memory _bcomma = bytes(",");
+        string memory abcd = new string(_ba.length + _bb.length+1);
+        bytes memory babcde = bytes(abcd);
+        uint k = 0;
+        for (uint i = 0; i < _ba.length; i++) babcde[k++] = _ba[i];
+        babcde[_ba.length]=_bcomma[0];
+        for (uint i = 0; i < _bb.length; i++) babcde[k++] = _bb[i];
+        
+        return string(babcde);
+    }
+    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint j = _i;
+        uint len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint k = len - 1;
+        while (_i != 0) {
+            bstr[k--] = byte(uint8(48 + _i % 10));
+            _i /= 10;
+        }
+        return string(bstr);
+    }
+    
+}
