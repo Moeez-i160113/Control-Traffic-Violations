@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useRef }from 'react';
 
 import logo from '../logo.jpg';
 import SignIn from './SignIn';
@@ -39,7 +39,9 @@ import MenuList from '@material-ui/core/MenuList';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+import { useReactToPrint } from 'react-to-print';
 
+import ReactToPrint from "react-to-print";
 
 
 const DailyChallans = React.lazy(() => import("./DailyChallans"));
@@ -49,6 +51,7 @@ const MonthlyDeposits = React.lazy(() => import("./MonthlyDeposits"));
 const WeeklyAmount = React.lazy(() => import("./WeeklyAmount"));
 const MonthlyChallans = React.lazy(() => import("./MonthlyChallans"));
 const MonthlyAmount = React.lazy(() => import("./MonthlyAmount"));
+
 
 
 
@@ -193,6 +196,11 @@ const LoginDailyChallans = props => {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const fixedHeightPaper2 = clsx(classes.paper2, classes.fixedHeight);
+  
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   return (
     <div className={classes.root}>
@@ -250,7 +258,7 @@ const LoginDailyChallans = props => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="lg" className={classes.container} ref={componentRef}>
         <Paper className={classes.background}> 
           {/* <Grid container spacing={1}> */}
             {/* Chart */}
@@ -301,8 +309,11 @@ const LoginDailyChallans = props => {
 
             <Grid item >
               <Paper className={classes.paper}>
-              <MonthlyDeposits annual_amount ={props.annual_amount}/>
-              {/* <Button  color="primary" variant="contained" onClick={() => window.print()}>Print</Button> */}
+               <div> 
+              <MonthlyDeposits  annual_amount ={props.annual_amount}/>
+              {/* <Button  color="primary" variant="contained" onClick={handlePrint}>Print</Button> */}
+              {/* <button onClick={handlePrint}>Print this out!</button> */}
+              </div>
               </Paper>
             </Grid>
 
@@ -315,6 +326,8 @@ const LoginDailyChallans = props => {
           </Box>
         </Container>
       </main>
+      {/* <button onClick={handlePrint}>Print this out!</button> */}
+       <Button  color="primary" variant="contained" onClick={handlePrint}>Print</Button>
     </div>
   );
 }

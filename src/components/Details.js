@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 import logo from '../logo.jpg';
 import SignIn from './SignIn';
@@ -31,6 +32,8 @@ import MenuList from '@material-ui/core/MenuList';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+
+
 
 
 function Copyright() {
@@ -248,6 +251,15 @@ const Details = props => {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  // window.alert(props.selected);
+  // window.alert(props.chalans);
+
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -287,7 +299,7 @@ const Details = props => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="lg" className={classes.container} ref={componentRef}>
 
             {/* Recent Orders */}
           <Paper className={classes.paper}>
@@ -692,6 +704,7 @@ const Details = props => {
           </Box>
         </Container>
       </main>
+      <Button  color="primary" variant="contained" onClick={handlePrint}>Print</Button>
     </div>
   );
 }
